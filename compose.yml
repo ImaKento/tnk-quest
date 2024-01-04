@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  tnk_quest_front:
+    container_name: tnk_quest_front
+    build: 
+      context: ./tnk_quest_front
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./tnk_quest_front:/usr/src/app
+      - /usr/src/app/node_modules
+
+  tnk_quest_back:
+    container_name: tnk_quest_back
+    build:
+      context: ./tnk_quest_back
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./tnk_quest_back:/app
+    depends_on:
+      - db
+
+  db:
+    container_name: tnk_quest_db
+    image: postgres:14
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

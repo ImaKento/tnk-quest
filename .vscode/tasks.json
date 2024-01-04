@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "npm: start tnk_quest",
+            "type": "npm",
+            "script": "start",
+            "path": "tnk_quest_front/",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "custom",
+                "pattern": {
+                    "regexp": "^$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "\\[start\\] Starting the development server...",
+                    "endsPattern": "Compiled successfully."
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@font-face {
+  font-family: 'AoboshiOne-Regular';
+  src: url('./fonts/AoboshiOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoSansCJK-Black';
+  src: url('./fonts/NotoSansCJK-Black.ttc') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 600,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.logo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background-image: url('/usr/src/app/src/image/logo_bg.jpg');
+  margin: 0;
+  padding: 20px 0;
+  z-index: 1000;
+}
+
+.image-container {
+  overflow: auto;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  background-image: url('/usr/src/app/src/image/base_bg.jpg');
+  background-size: contain;
+  background-repeat: repeat;
+  min-height: 100vh;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-top: 120px;
+  position: relative;
+}
