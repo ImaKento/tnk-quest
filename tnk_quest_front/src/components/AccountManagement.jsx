@@ -55,7 +55,7 @@ function AccountManagement({ onLogin, onSubmit }) {
 
   const handleCreateAccountSubmit = async () => {
         try {
-            const response = await fetch('http://localhost:3000/signup/', {
+            const response = await fetch('http://192.168.11.52:3000/signup/', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ function AccountManagement({ onLogin, onSubmit }) {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://localhost:3000/login/', {
+      const response = await fetch('http://192.168.11.52:3000/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -113,11 +113,11 @@ function AccountManagement({ onLogin, onSubmit }) {
                         backgroundImage: 'url(/image/logo_bg.jpg)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
-                        margin: '10px',
-                        padding: '15px 30px',
+                        margin: '1vh 0',
+                        padding: '1vh 3vw',
                         fontFamily: 'NotoSansCJK-Black',
-                        fontSize: '40px',
-                        width: '600px',
+                        fontSize: '2.5vh',
+                        width: '50vw',
                         color: 'rgb(255,239,213)'
                     }}
                     >
@@ -130,17 +130,17 @@ function AccountManagement({ onLogin, onSubmit }) {
                         backgroundImage: 'url(/image/logo_bg.jpg)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
-                        margin: '10px',
-                        padding: '15px 30px',
+                        margin: '1vh 0',
+                        padding: '1vh 3vw',
                         fontFamily: 'NotoSansCJK-Black',
-                        fontSize: '40px',
-                        width: '600px',
+                        fontSize: '2.5vh',
+                        width: '50vw',
                         color: 'rgb(255,239,213)'
                     }}
                     >
                     ログイン
                 </Button>
-                <img src="/image/entry.png" alt="エントリー" style={{ maxWidth: '100%', height: 'auto', margin: '10px' }} />
+                <img src="/image/entry.png" alt="エントリー" style={{ maxWidth: '70%', height: 'auto', margin: '10px' }} />
             </div>
         </div>
 

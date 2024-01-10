@@ -7,7 +7,7 @@ services:
       context: ./tnk_quest_front
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3030:3030"
     volumes:
       - ./tnk_quest_front:/usr/src/app
       - /usr/src/app/node_modules
@@ -18,9 +18,9 @@ services:
       context: ./tnk_quest_back
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "3000:3000"
     volumes:
-      - ./tnk_quest_back:/app
+      - /usr/src/app/node_modules
     depends_on:
       - db
 

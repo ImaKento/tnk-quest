@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9a7e0477.css",
+    "main.js": "/static/js/main.2e880040.js",
+    "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
+    "static/media/NotoSansCJK-Black.ttc": "/static/media/NotoSansCJK-Black.4428afdf3213b859415b.ttc",
+    "static/media/logo_bg.jpg": "/static/media/logo_bg.f8fbb168c65f159f02f4.jpg",
+    "static/media/base_bg.jpg": "/static/media/base_bg.ee9bf784daf188832c17.jpg",
+    "static/media/AoboshiOne-Regular.ttf": "/static/media/AoboshiOne-Regular.7721efdd17f9cd8ced01.ttf",
+    "index.html": "/index.html",
+    "main.9a7e0477.css.map": "/static/css/main.9a7e0477.css.map",
+    "main.2e880040.js.map": "/static/js/main.2e880040.js.map",
+    "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9a7e0477.css",
+    "static/js/main.2e880040.js"
+  ]
+}

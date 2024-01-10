@@ -1,18 +1,23 @@
-FROM python:3.11
+# Node.jsの公式イメージをベースにする。バージョンはアプリケーションの要件に応じて調整。
+FROM node:lts-alpine3.18
 
-ENV PYTHONUNBUFFERED 1
+# アプリケーションのソースコードを配置する作業ディレクトリを設定
+WORKDIR /usr/src/app
 
-# タイムゾーンを日本時間に設定
-ENV TZ=Asia/Tokyo
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# アプリケーションの依存関係のファイル（package.json と package-lock.json）をコピー
+COPY package*.json ./
 
-WORKDIR /app
+# npmを使用して依存関係をインストール。本番用の依存関係のみをインストールする場合は、--only=productionを追加。
+RUN npm install
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+# 環境変数PATHを設定して、node_modules/.bin内の実行可能ファイルがパスに追加されるようにする
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
+# アプリケーションのソースコードをコピー
 COPY . .
 
-# コンテナ起動時にDjangoサーバーを実行
-# CMD ["/app/wait-for-it.sh", "db:5432", "--timeout=30", "--", "uwsgi", "--ini", "/app/uwsgi.ini"]
-CMD ["/app/wait-for-it.sh", "db:5432", "--timeout=30", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+# アプリケーションがバインドするポートを指定
+EXPOSE 3000
+
+# アプリケーションの実行コマンド
+CMD ["node", "app.js"]

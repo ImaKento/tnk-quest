@@ -23,7 +23,7 @@ function TnkQuestApp() {
   return (
     <div className="App">
       <div className="logo">
-        <Typography variant="h1" style={{ fontFamily: 'AoboshiOne-Regular', color: 'rgb(255,239,213)', margin: 0, padding: 0 }}>
+        <Typography variant="h1" style={{ fontFamily: 'AoboshiOne-Regular', color: 'rgb(255,239,213)', fontSize: '8vh', margin: 0, padding: 0 }}>
           TnkQuest
         </Typography>
       </div>

@@ -9,6 +9,7 @@ function QuestSelection({ hunter, deleteHunter }) {
   const [questAcceptorAnchorEl, setQuestAcceptorAnchorEl] = useState(null);
   const [quests, setQuests] = useState([]);
   const [selectedQuest, setSelectedQuest] = useState(null);
+  const [rankCounts, setRankCounts] = useState({});
   const buttonRef = useRef(null);
   const [isAddQuestDialogOpen, setIsAddQuestDialogOpen] = useState(false);
   const [completeQuestDialogOpen, setCompleteQuestDialogOpen] = useState(false);
@@ -23,6 +24,9 @@ function QuestSelection({ hunter, deleteHunter }) {
   const [accpetQuestSuccessDialogOpen, setAccpetQuestSuccessDialogOpen] = useState(false);
   const [questAcceptorDiscardSuccessDialogOpen, setQuestAcceptorDiscardSuccessDialogOpen] = useState(false);
   const [completeQuestSuccessDialogOpen, setCompleteQuestSuccessDialogOpen] = useState(false);
+  const [acceptQuestManagementDialogOpen, setAcceptQuestManagementDialogOpen] = useState(false);
+  const [questAcceptorDiscardManagementDialogOpen, setQuestAcceptorDiscardManagementDialogOpen] = useState(false);
+  const [rankingDialogOpen, setRankingDialogOpen] = useState(false);
   const [errorDialogOpen, setErrorDialogOpen] = useState(false);
   const [isDuplicateDialogOpen, setIsDuplicateDialogOpen] = useState(false);
   const [isAchievementDialogOpen, setIsAchievementDialogOpen] = useState(false);
@@ -51,6 +55,33 @@ function QuestSelection({ hunter, deleteHunter }) {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
   };
+  // ランキングのソート用定義
+  const rankPoints = {
+    S: 7,
+    A: 5,
+    B: 4,
+    C: 3,
+    D: 2,
+    E: 1
+  };
+  // ランキングに関する計算
+  const calculateScore = (ranks) => {
+    return Object.entries(ranks).reduce((totalScore, [rank, count]) => {
+      return totalScore + (rankPoints[rank] * count);
+    }, 0);
+  };
+  // ランキングの作成
+  const createRanking = (rankCounts) => {
+    return Object.entries(rankCounts)
+      .map(([hunterName, ranks]) => ({
+        hunterName,
+        score: calculateScore(ranks),
+        ranks
+      }))
+      .sort((a, b) => b.score - a.score);
+  };
+  
+  
 
   const scrollToBottom = () => {
     window.scrollTo({
@@ -146,13 +177,25 @@ function QuestSelection({ hunter, deleteHunter }) {
 
   const handleDeleteHunterSuccessDialogClose = () => {
     setDeleteHunterSuccessDialogOpen(false);
-    deleteHunter(true);
+    deleteHunter(true); // 保持しているセッション情報をフラグによって疑似的に破棄
+  }
+
+  const handleAcceptQuestManagementDialogClose = () => {
+    setAcceptQuestManagementDialogOpen(false);
+  }
+  
+  const handleQuestAcceptorDiscardManagementDialogClose = () => {
+    setQuestAcceptorDiscardManagementDialogOpen(false);
+  }
+
+  const handleRankingDialogClose = () => {
+    setRankingDialogOpen(false);
   }
 
 // 全ユーザーのユーザーネームを取得する関数
 const fetchAllHunters = async () => {
   try {
-    const response = await fetch('http://localhost:3000/getHunters/');
+    const response = await fetch('http://192.168.11.52:3000/getHunters/');
     if (!response.ok) {
       setErrorDialogOpen(true);
     }
@@ -170,7 +213,7 @@ const handleHunterClick = async (hunterName) => {
   setIsIndividualHunterAchievementDialogOpen(true);
 
   // 実績データを取得
-  const response = await fetch(`http://localhost:3000/getAchievements/${hunterName}`);
+  const response = await fetch(`http://192.168.11.52:3000/getAchievements/${hunterName}`);
   if (response.ok) {
     const data = await response.json();
     setAchievements(data);
@@ -188,6 +231,21 @@ const handleAllHuntersDialogOpen = () => {
   setIsAllHuntersDialogOpen(true);
 };
 
+const handleAcceptQuestManagementDialogOpen = () => {
+  fetchAllHunters();
+  setAcceptQuestManagementDialogOpen(true);
+};
+
+const handleQuestAcceptorDiscardManagementDialogOpen = () => {
+  fetchAllHunters();
+  setQuestAcceptorDiscardManagementDialogOpen(true);
+};
+
+const handleRankingDialogOpen = () => {
+  fetchAllRanksCount();
+  setRankingDialogOpen(true);
+}
+
 const handleAllHuntersDialogClose = () => {
   setIsAllHuntersDialogOpen(false);
 };
@@ -199,7 +257,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // クエストの削除を処理する関数
   const handleDeleteQuest = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/deleteQuest/${selectedDeleteQuest}/`, {
+      const response = await fetch(`http://192.168.11.52:3000/deleteQuest/${selectedDeleteQuest}/`, {
         method: 'DELETE',
       });
 
@@ -220,7 +278,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // ハンターの削除を処理する関数
   const handleDeleteHunter = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/deleteHunter/${hunter}/`, {
+      const response = await fetch(`http://192.168.11.52:3000/deleteHunter/${hunter}/`, {
         method: 'DELETE',
       });
 
@@ -239,7 +297,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // クエストを完了する関数
   const handleCompleteQuest = async () => {
     try {
-      const response = await fetch('http://localhost:3000/completeQuest/', {
+      const response = await fetch('http://192.168.11.52:3000/completeQuest/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -249,6 +307,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
 
       if (response.ok) {
         setCompleteQuestSuccessDialogOpen(true);
+        handleCompleteQuestDialogClose();
       } else {
         setErrorDialogOpen(true);
       }
@@ -262,7 +321,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
     setIsAchievementDialogOpen(true);
 
     // 実績データを取得
-    const response = await fetch(`http://localhost:3000/getAchievements/${hunter}`);
+    const response = await fetch(`http://192.168.11.52:3000/getAchievements/${hunter}`);
     if (response.ok) {
       const data = await response.json();
       setAchievements(data);
@@ -310,7 +369,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // クエストを追加する関数
   const handleSubmitNewQuest = async () => {
     try {
-      const response = await fetch('http://localhost:3000/addQuest/', {
+      const response = await fetch('http://192.168.11.52:3000/addQuest/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -332,18 +391,19 @@ const handleIndividualHunterAchievementDialogClose = () => {
   };
 
   // クエスト受諾する関数
-  const handleAcceptQuest = async () => {
+  const handleAcceptQuest = async (hunterName) => {
     try {
-      const response = await fetch('http://localhost:3000/acceptQuest/', {
+      const response = await fetch('http://192.168.11.52:3000/acceptQuest/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ quest_id: selectedQuest.id, hunter_name: hunter }),
+        body: JSON.stringify({ quest_id: selectedQuest.id, hunter_name: hunterName }),
       });
 
       if (response.ok) {
         // 処理成功の場合
+        setAcceptQuestManagementDialogOpen(false);
         setAccpetQuestSuccessDialogOpen(true);
       } else if (response.status === 400) {
         // 重複エラーの場合
@@ -359,13 +419,13 @@ const handleIndividualHunterAchievementDialogClose = () => {
   };
 
   // 受諾中のクエストを破棄する関数
-  const handleQuestAcceptorDiscard = async () => {
+  const handleQuestAcceptorDiscard = async (hunterName) => {
     try {
       // 選択中のクエストのhunters属性を分割して配列に変換
       let huntersArray = selectedQuest.hunters.split(' ');
   
       // hunterの値を配列から削除
-      huntersArray = huntersArray.filter(h => h !== hunter);
+      huntersArray = huntersArray.filter(h => h !== hunterName);
   
       // 配列を空白で結合して文字列に戻す
       const updatedHunters = huntersArray.join(' ');
@@ -377,7 +437,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
       };
   
       // サーバーに送信してデータベースを更新
-      const response = await fetch(`http://localhost:3000/updateQuest/${selectedQuest.id}/`, {
+      const response = await fetch(`http://192.168.11.52:3000/updateQuest/${selectedQuest.id}/`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -388,17 +448,32 @@ const handleIndividualHunterAchievementDialogClose = () => {
       if (!response.ok) {
         setErrorDialogOpen(true);
       }
+      setQuestAcceptorDiscardManagementDialogOpen(false);
       setQuestAcceptorDiscardSuccessDialogOpen(true);
     } catch (error) {
       setErrorDialogOpen(true);
     }
   };
-  
+
+  const fetchAllRanksCount = async () => {
+    try {
+      const response = await fetch('http://192.168.11.52:3000/getAllRanksCount');
+      if (response.ok) {
+        const data = await response.json();
+        setRankCounts(data);
+      } else {
+        setErrorDialogOpen(true);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorDialogOpen(true);
+    }
+  };
 
   // APIからクエストのリストを取得する関数
   const fetchQuests = async () => {
     try {
-      const response = await fetch('http://localhost:3000/getQuest/');
+      const response = await fetch('http://192.168.11.52:3000/getQuest/');
       const data = await response.json();
       if (response.ok) {
         setQuests(data); // 状態にクエストのリストを設定
@@ -420,6 +495,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // リロードボタンが押されたときにデータを再取得
   const handleReload = () => {
     fetchQuests();
+    setSelectedQuest(null)
   };
 
   return (
@@ -607,7 +683,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                   <>
                     <Button
                       variant="contained"
-                      onClick={handleAcceptQuest}
+                      onClick={() => hunter === 'ALL' ? handleAcceptQuestManagementDialogOpen() : handleAcceptQuest(hunter)}
                       style={{
                         backgroundImage: 'url(/image/logo_bg.jpg)',
                         backgroundSize: 'cover',
@@ -621,11 +697,11 @@ const handleIndividualHunterAchievementDialogClose = () => {
                       }}
                       fullWidth
                     >
-                      このクエストを受諾する
+                      {hunter === 'ALL' ? 'クエスト受諾者管理' : 'このクエストを受諾する'}
                     </Button>
                     <Button
                       variant="contained"
-                      onClick={handleQuestAcceptorDiscard}
+                      onClick={() => hunter === 'ALL' ? handleQuestAcceptorDiscardManagementDialogOpen() : handleQuestAcceptorDiscard(hunter)}
                       style={{
                         backgroundImage: 'url(/image/logo_bg.jpg)',
                         backgroundSize: 'cover',
@@ -639,7 +715,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                       }}
                       fullWidth
                     >
-                      このクエストを破棄する
+                      {hunter === 'ALL' ? 'クエスト破棄管理' : 'このクエストを破棄する'}
                     </Button>
                   </>
                 )}
@@ -710,6 +786,8 @@ const handleIndividualHunterAchievementDialogClose = () => {
           <Divider />
           <MenuItem onClick={handleAllHuntersDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '20px', padding: '10px' }}>みんなの実績</MenuItem>
           <Divider />
+          <MenuItem onClick={handleRankingDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '20px', padding: '10px' }}>ランキング</MenuItem>
+          <Divider />
         </Menu>
 
         <IconButton
@@ -741,7 +819,8 @@ const handleIndividualHunterAchievementDialogClose = () => {
           >
           {hunter}としてログイン中
         </Typography>
-
+        
+        {/* クエスト・アカウント管理系のリクエスト */}
         <Dialog open={isAddQuestDialogOpen} onClose={handleCloseAddQuestDialog}>
           <DialogTitle align="center" style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }} >新しいクエストを追加</DialogTitle>
           <DialogContent>
@@ -841,7 +920,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                   fontSize: '20px',
                   }}
                 >
-                {quests.filter(quest => quest.client === hunter).map(quest => (
+                {quests.filter(quest => (hunter === 'ALL' || quest.client === hunter)).map(quest => (
                   <MenuItem key={quest.id} value={quest.id} style={{ fontSize: '20px' }} >
                     {quest.title}
                   </MenuItem>
@@ -906,20 +985,20 @@ const handleIndividualHunterAchievementDialogClose = () => {
           </DialogActions>
         </Dialog>
         <Dialog open={completeQuestDialogOpen} onClose={handleCompleteQuestDialogClose} fullWidth>
-          <DialogTitle align="center" style={{ fontSize: '24px', marginBottom: '20px', fontFamily: 'NotoSansCJK-Black' }} >クエストの完了</DialogTitle>
+          <DialogTitle align="center" style={{ fontSize: '24px', marginBottom: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+            クエストの完了
+          </DialogTitle>
           <DialogContent>
             <FormControl fullWidth margin="dense">
-              <InputLabel style={{ fontSize: '20px' }} >クエスト選択</InputLabel>
+              <InputLabel style={{ fontSize: '20px' }}>クエスト選択</InputLabel>
               <Select
                 value={selectedCompleteQuest}
                 label="完了するクエストの選択"
                 onChange={handleCompleteQuestChange}
-                style={{
-                  fontSize: '20px',
-                  }}
-                >
-                {quests.filter(quest => quest.client === hunter && !quest.completed).map(quest => (
-                  <MenuItem key={quest.id} value={quest.id} style={{ fontSize: '20px' }} >
+                style={{ fontSize: '20px' }}
+              >
+                {quests.filter(quest => (hunter === 'ALL' || quest.client === hunter) && !quest.completed).map(quest => (
+                  <MenuItem key={quest.id} value={quest.id} style={{ fontSize: '20px' }}>
                     {quest.title}
                   </MenuItem>
                 ))}
@@ -947,6 +1026,56 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </Button>
           </DialogActions>
         </Dialog>
+        <Dialog open={rankingDialogOpen} onClose={handleRankingDialogClose} fullWidth maxWidth="md">
+          <DialogTitle align="center" style={{ fontSize: '24px', marginBottom: '20px', fontFamily: 'NotoSansCJK-Black' }}>ランキング</DialogTitle>
+          <DialogContent>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>順位</TableCell>
+                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>ハンター名</TableCell>
+                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>得点</TableCell>
+                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>S</TableCell>
+                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>A</TableCell>
+                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>B</TableCell>
+                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>C</TableCell>
+                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>D</TableCell>
+                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>E</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {createRanking(rankCounts).map((item, index) => (
+                    <TableRow key={item.hunterName}>
+                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{index + 1}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.hunterName}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.score}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.S || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.A || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.B || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.C || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.D || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.E || 0}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleRankingDialogClose}
+              color="primary"
+              variant="contained"
+              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} 
+              fullWidth
+            >
+              閉じる
+            </Button>
+          </DialogActions>
+        </Dialog>
+        
+        {/* クエスト・アカウント管理系のレスポンス */}
         <Dialog open={errorDialogOpen} onClose={handleErrorDialogClose}>
             <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }} >エラー</DialogTitle>
             <DialogContent>
@@ -1099,6 +1228,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </Button>
           </DialogActions>
         </Dialog>
+
         {/* 実績ダイアログ */}
         <Dialog open={isAchievementDialogOpen} onClose={handleIndividualAchievementDialogClose} fullWidth maxWidth="md">
           <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>
@@ -1193,6 +1323,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="実績テーブル">
                   <TableHead>
                     <TableRow>
+                      {selectedHunter === 'ALL' && (
+                        <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>ハンター名</TableCell>
+                      )}
                       <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト</TableCell>
                       <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>ランク</TableCell>
                     </TableRow>
@@ -1200,6 +1333,11 @@ const handleIndividualHunterAchievementDialogClose = () => {
                   <TableBody>
                     {achievements.map((achievement, index) => (
                       <TableRow key={index}>
+                        {selectedHunter === 'ALL' && (
+                          <TableCell align="center" component="th" scope="row" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+                            {achievement.hunter_name}
+                          </TableCell>
+                        )}
                         <TableCell align="center" component="th" scope="row" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
                           {achievement.quest_title}
                         </TableCell>
@@ -1226,6 +1364,82 @@ const handleIndividualHunterAchievementDialogClose = () => {
               fullWidth
             >
               閉じる
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* ALL用 */}
+        <Dialog open={acceptQuestManagementDialogOpen} onClose={handleAcceptQuestManagementDialogClose}>
+          <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト受諾者管理</DialogTitle>
+          <DialogContent>
+            <FormControl fullWidth margin="dense">
+              <InputLabel id="hunter-select-label">クエストを受諾するユーザーの選択</InputLabel>
+              <Select
+                labelId="hunter-select-label"
+                id="hunter-select"
+                value={selectedHunter}
+                label="クエストを受諾するユーザーの選択"
+                onChange={handleHunterSelectChange}
+              >
+                {allHunters.map(hunter => (
+                  <MenuItem key={hunter} value={hunter}>{hunter}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleAcceptQuestManagementDialogClose}
+              color="primary"
+              variant="contained"
+              fullWidth
+            >
+              閉じる
+            </Button>
+            <Button
+              onClick={() => handleAcceptQuest(selectedHunter)}
+              color="primary"
+              variant="contained"
+              fullWidth
+            >
+              確定
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={questAcceptorDiscardManagementDialogOpen} onClose={handleQuestAcceptorDiscardManagementDialogClose}>
+          <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト破棄管理</DialogTitle>
+          <DialogContent>
+            <FormControl fullWidth margin="dense">
+              <InputLabel id="hunter-select-label">クエストを破棄するユーザーの選択</InputLabel>
+              <Select
+                labelId="hunter-select-label"
+                id="hunter-select"
+                value={selectedHunter}
+                label="クエストを破棄するユーザーの選択"
+                onChange={handleHunterSelectChange}
+              >
+                {allHunters.map(hunter => (
+                  <MenuItem key={hunter} value={hunter}>{hunter}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleQuestAcceptorDiscardManagementDialogClose}
+              color="primary"
+              variant="contained"
+              fullWidth
+            >
+              閉じる
+            </Button>
+            <Button
+              onClick={() => handleQuestAcceptorDiscard(selectedHunter)}
+              color="primary"
+              variant="contained"
+              fullWidth
+            >
+              確定
             </Button>
           </DialogActions>
         </Dialog>
