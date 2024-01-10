@@ -48,7 +48,7 @@ code {
   text-align: center;
   background-image: url('/usr/src/app/src/image/logo_bg.jpg');
   margin: 0;
-  padding: 20px 0;
+  padding: '10vh 0';
   z-index: 1000;
 }
 
@@ -61,8 +61,8 @@ code {
   background-size: contain;
   background-repeat: repeat;
   min-height: 100vh;
+  margin-top: 10vh;
   justify-content: flex-end;
   align-items: flex-start;
-  margin-top: 120px;
   position: relative;
 }

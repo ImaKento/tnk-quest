@@ -506,7 +506,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               key={quest.id}
               variant="contained"
               onClick={() => handleQuestSelect(quest)}
-              style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '30px', margin: '10px', backgroundColor: 'rgba(101, 67, 33, 0.7)' }}
+              style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.5vh', margin: '1vh', backgroundColor: 'rgba(101, 67, 33, 0.7)' }}
             >
               {quest.title}  {quest.rank}ランク
             </Button>
@@ -550,9 +550,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     backgroundImage: 'url(/image/logo_bg.jpg)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    padding: '15px 30px',
+                    padding: '0.5vh 2vw',
                     fontFamily: 'NotoSansCJK-Black',
-                    fontSize: '16px',
+                    fontSize: '1.0vh',
                     color: 'rgb(255,239,213)'
                   }}
                 >
@@ -578,7 +578,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                       onClick={handleQuestAcceptorMenuClose}
                       style={{
                         fontFamily: 'NotoSansCJK-Black',
-                        fontSize: '16px',
+                        fontSize: '1.7vh',
                         padding: '10px',
                       }}
                     >
@@ -593,7 +593,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="h3"
                       align="center"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '50px', marginBottom: '60px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '3.5vh', marginBottom: '60px' }}
                     >
                       {selectedQuest.title}
                     </Typography>
@@ -604,7 +604,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="right"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '30px', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '30px' }}
                     >
                       依頼者：
                     </Typography>
@@ -613,7 +613,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="left"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '30px', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '30px' }}
                     >
                       {selectedQuest.client}
                     </Typography>
@@ -624,7 +624,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="right"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '30px', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '30px' }}
                     >
                       締切：
                     </Typography>
@@ -633,7 +633,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="left"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '30px', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '30px' }}
                     >
                       {formatDateWithTime(selectedQuest.deadline)}
                     </Typography>
@@ -644,7 +644,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="right"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '30px', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '30px' }}
                     >
                       定員：
                     </Typography>
@@ -653,7 +653,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="left"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '30px', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '30px' }}
                     >
                       {selectedQuest.capacity}
                     </Typography>
@@ -664,7 +664,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="right"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '30px', whiteSpace: 'pre-line', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', whiteSpace: 'pre-line', marginBottom: '30px' }}
                     >
                       概要：
                     </Typography>
@@ -673,7 +673,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="left"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '30px', whiteSpace: 'pre-line', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', whiteSpace: 'pre-line', marginBottom: '30px' }}
                     >
                       {selectedQuest.overview}
                     </Typography>
@@ -688,9 +688,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
                         backgroundImage: 'url(/image/logo_bg.jpg)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
-                        padding: '15px 30px',
+                        padding: '1vh 3vw',
                         fontFamily: 'NotoSansCJK-Black',
-                        fontSize: '40px',
+                        fontSize: '2.5vh',
                         marginBottom: '20px',
                         width: '100%',
                         color: 'rgb(255,239,213)',
@@ -706,9 +706,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
                         backgroundImage: 'url(/image/logo_bg.jpg)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
-                        padding: '15px 30px',
+                        padding: '1vh 3vw',
                         fontFamily: 'NotoSansCJK-Black',
-                        fontSize: '40px',
+                        fontSize: '2.5vh',
                         marginBottom: '20px',
                         width: '100%',
                         color: 'rgb(255,239,213)',
@@ -751,8 +751,8 @@ const handleIndividualHunterAchievementDialogClose = () => {
           style={{
             zIndex: 1000,
             position: 'fixed',
-            right: '50px',
-            top: '50px',
+            right: '3vw',
+            top: '3vh',
             backgroundColor: 'rgb(255,239,213)',
             borderRadius: '50%',
             width: '60px',
@@ -795,12 +795,12 @@ const handleIndividualHunterAchievementDialogClose = () => {
           style={{
             zIndex: 1000,
             position: 'fixed',
-            left: '50px',
-            top: '50px',
+            left: '3vw',
+            top: '3vh',
             backgroundColor: 'rgb(255,239,213)',
             borderRadius: '50%',
-            width: '60px',
-            height: '60px',
+            width: '40px',
+            height: '40px',
             padding: '30px'
           }}
         >
@@ -811,10 +811,10 @@ const handleIndividualHunterAchievementDialogClose = () => {
           variant="body1"
           style={{
             fontFamily: 'NotoSansCJK-Black',
-            fontSize: '20px',
+            fontSize: '1.0vh',
             position: 'fixed',
             left: 40,
-            top: 160
+            top: 130
             }}
           >
           {hunter}としてログイン中
