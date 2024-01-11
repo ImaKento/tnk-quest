@@ -499,7 +499,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   };
 
   return (
-      <Grid container spacing={2} style={{ marginTop: '180px' }}>
+      <Grid container spacing={2} style={{ marginTop: '4.0vh' }}>
         <Grid item xs={12} lg={3} style={{ display: 'flex', flexDirection: 'column' }}>
           {quests.map(quest => (
             <Button
@@ -519,7 +519,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               position: 'relative',
               width: '100%', 
               height: 'auto', 
-              margin: '20px 0',
+              margin: '1.2vh',
               right: 'auto',
               top: 'auto',
               backgroundImage: `url(${getBackgroundImagePath(backgroundImageIndex)})`,
@@ -552,7 +552,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     backgroundPosition: 'center',
                     padding: '0.5vh 2vw',
                     fontFamily: 'NotoSansCJK-Black',
-                    fontSize: '1.0vh',
+                    fontSize: '1.8vh',
                     color: 'rgb(255,239,213)'
                   }}
                 >
@@ -578,8 +578,8 @@ const handleIndividualHunterAchievementDialogClose = () => {
                       onClick={handleQuestAcceptorMenuClose}
                       style={{
                         fontFamily: 'NotoSansCJK-Black',
-                        fontSize: '1.7vh',
-                        padding: '10px',
+                        fontSize: '1.8vh',
+                        padding: '1.0vh',
                       }}
                     >
                       {acceptor}
@@ -593,7 +593,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="h3"
                       align="center"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '3.5vh', marginBottom: '60px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '3.5vh', marginBottom: '2vh' }}
                     >
                       {selectedQuest.title}
                     </Typography>
@@ -604,7 +604,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="right"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
                     >
                       依頼者：
                     </Typography>
@@ -613,7 +613,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="left"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
                     >
                       {selectedQuest.client}
                     </Typography>
@@ -624,7 +624,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="right"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
                     >
                       締切：
                     </Typography>
@@ -633,7 +633,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="left"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
                     >
                       {formatDateWithTime(selectedQuest.deadline)}
                     </Typography>
@@ -644,7 +644,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="right"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
                     >
                       定員：
                     </Typography>
@@ -653,7 +653,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="left"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
                     >
                       {selectedQuest.capacity}
                     </Typography>
@@ -664,7 +664,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="right"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', whiteSpace: 'pre-line', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', whiteSpace: 'pre-line', marginBottom: '1.2vh' }}
                     >
                       概要：
                     </Typography>
@@ -673,7 +673,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <Typography
                       variant="body1"
                       align="left"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', whiteSpace: 'pre-line', marginBottom: '30px' }}
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', whiteSpace: 'pre-line', marginBottom: '1.2vh' }}
                     >
                       {selectedQuest.overview}
                     </Typography>
@@ -691,7 +691,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                         padding: '1vh 3vw',
                         fontFamily: 'NotoSansCJK-Black',
                         fontSize: '2.5vh',
-                        marginBottom: '20px',
+                        marginBottom: '1.2vh',
                         width: '100%',
                         color: 'rgb(255,239,213)',
                       }}
@@ -709,7 +709,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                         padding: '1vh 3vw',
                         fontFamily: 'NotoSansCJK-Black',
                         fontSize: '2.5vh',
-                        marginBottom: '20px',
+                        marginBottom: '1.2vh',
                         width: '100%',
                         color: 'rgb(255,239,213)',
                       }}
@@ -730,16 +730,14 @@ const handleIndividualHunterAchievementDialogClose = () => {
             style={{ 
               zIndex: 1000,
               position: 'fixed',
-              bottom: 20,
-              right: 20,
+              right: '2vw',
+              bottom: '2vh',
               backgroundColor: 'rgb(255,239,213)',
               borderRadius: '50%',
-              width: '60px',
-              height: '60px',
-              padding: '30px'
+              padding: '1.5vh'
             }}
         >
-          <VerticalAlignBottomIcon style={{ fontSize: '50px' }}/>
+          <VerticalAlignBottomIcon style={{ fontSize: '2.5vh' }}/>
         </Fab>
 
         {/* メニューを開くボタン */}
@@ -751,16 +749,14 @@ const handleIndividualHunterAchievementDialogClose = () => {
           style={{
             zIndex: 1000,
             position: 'fixed',
-            right: '3vw',
-            top: '3vh',
+            right: '2vw',
+            top: '2vh',
             backgroundColor: 'rgb(255,239,213)',
             borderRadius: '50%',
-            width: '60px',
-            height: '60px',
-            padding: '30px'
+            padding: '1.5vh'
           }}
         >
-          <MenuIcon style={{ fontSize: '50px' }} />
+          <MenuIcon style={{ fontSize: '2.5vh' }} />
         </IconButton>
         {/* メニュー本体 */}
         <Menu
@@ -774,19 +770,19 @@ const handleIndividualHunterAchievementDialogClose = () => {
           }}
         >
           <Divider />
-          <MenuItem onClick={handleAddQuestDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '20px', padding: '10px' }}>クエスト依頼</MenuItem>
+          <MenuItem onClick={handleAddQuestDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>クエスト依頼</MenuItem>
           <Divider />
-          <MenuItem onClick={handleCompleteQuestDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '20px', padding: '10px' }}>クエスト完了</MenuItem>
+          <MenuItem onClick={handleCompleteQuestDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>クエスト完了</MenuItem>
           <Divider />
-          <MenuItem onClick={handleDeleteQuestDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '20px', padding: '10px' }}>クエスト削除</MenuItem>
+          <MenuItem onClick={handleDeleteQuestDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>クエスト削除</MenuItem>
           <Divider />
-          <MenuItem onClick={handleDeleteHunterDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '20px', padding: '10px' }}>アカウント削除</MenuItem>
+          <MenuItem onClick={handleDeleteHunterDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>アカウント削除</MenuItem>
           <Divider />
-          <MenuItem onClick={handleIndividualAchievementDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '20px', padding: '10px' }}>実績</MenuItem>
+          <MenuItem onClick={handleIndividualAchievementDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>実績</MenuItem>
           <Divider />
-          <MenuItem onClick={handleAllHuntersDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '20px', padding: '10px' }}>みんなの実績</MenuItem>
+          <MenuItem onClick={handleAllHuntersDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>みんなの実績</MenuItem>
           <Divider />
-          <MenuItem onClick={handleRankingDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '20px', padding: '10px' }}>ランキング</MenuItem>
+          <MenuItem onClick={handleRankingDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>ランキング</MenuItem>
           <Divider />
         </Menu>
 
@@ -795,26 +791,24 @@ const handleIndividualHunterAchievementDialogClose = () => {
           style={{
             zIndex: 1000,
             position: 'fixed',
-            left: '3vw',
-            top: '3vh',
+            left: '2vw',
+            top: '2vh',
             backgroundColor: 'rgb(255,239,213)',
             borderRadius: '50%',
-            width: '40px',
-            height: '40px',
-            padding: '30px'
+            padding: '1.5vh'
           }}
         >
-          <RefreshIcon style={{ fontSize: '50px' }} />
+          <RefreshIcon style={{ fontSize: '2.5vh' }} />
         </IconButton>
 
         <Typography
           variant="body1"
           style={{
             fontFamily: 'NotoSansCJK-Black',
-            fontSize: '1.0vh',
+            fontSize: '1.8vh',
             position: 'fixed',
-            left: 40,
-            top: 130
+            left: '2vw',
+            top: '12vh'
             }}
           >
           {hunter}としてログイン中
@@ -822,12 +816,12 @@ const handleIndividualHunterAchievementDialogClose = () => {
         
         {/* クエスト・アカウント管理系のリクエスト */}
         <Dialog open={isAddQuestDialogOpen} onClose={handleCloseAddQuestDialog}>
-          <DialogTitle align="center" style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }} >新しいクエストを追加</DialogTitle>
+          <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }} >新しいクエストを追加</DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
               margin="dense"
-              style={{ fontSize: '20px' }} 
+              style={{ fontSize: '1.8vh' }} 
               label="タイトル"
               type="text"
               fullWidth
@@ -842,7 +836,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
             <TextField
               margin="dense"
               label="締切"
-              style={{ fontSize: '20px' }} 
+              style={{ fontSize: '1.8vh' }} 
               type="datetime-local"
               fullWidth
               InputLabelProps={{ shrink: true }}
@@ -852,7 +846,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
             <TextField
               margin="dense"
               label="定員"
-              style={{ fontSize: '20px' }} 
+              style={{ fontSize: '1.8vh' }} 
               type="number"
               fullWidth
               value={newQuest.capacity}
@@ -860,25 +854,25 @@ const handleIndividualHunterAchievementDialogClose = () => {
               InputProps={{ inputProps: { min: 0 } }}
             />
             <FormControl fullWidth margin="dense">
-              <InputLabel style={{ fontSize: '20px' }} >ランク</InputLabel>
+              <InputLabel style={{ fontSize: '1.8vh' }} >ランク</InputLabel>
               <Select
                 value={newQuest.rank}
                 onChange={(e) => handleNewQuestChange('rank', e.target.value)}
-                style={{ fontSize: '20px' }} 
+                style={{ fontSize: '1.8vh' }} 
                 label="ランク"
               >
-                <MenuItem value="S" style={{ fontSize: '20px' }}>S</MenuItem>
-                <MenuItem value="A" style={{ fontSize: '20px' }}>A</MenuItem>
-                <MenuItem value="B" style={{ fontSize: '20px' }}>B</MenuItem>
-                <MenuItem value="C" style={{ fontSize: '20px' }}>C</MenuItem>
-                <MenuItem value="D" style={{ fontSize: '20px' }}>D</MenuItem>
-                <MenuItem value="E" style={{ fontSize: '20px' }}>E</MenuItem>
+                <MenuItem value="S" style={{ fontSize: '1.8vh' }}>S</MenuItem>
+                <MenuItem value="A" style={{ fontSize: '1.8vh' }}>A</MenuItem>
+                <MenuItem value="B" style={{ fontSize: '1.8vh' }}>B</MenuItem>
+                <MenuItem value="C" style={{ fontSize: '1.8vh' }}>C</MenuItem>
+                <MenuItem value="D" style={{ fontSize: '1.8vh' }}>D</MenuItem>
+                <MenuItem value="E" style={{ fontSize: '1.8vh' }}>E</MenuItem>
               </Select>
             </FormControl>
             <TextField
               margin="dense"
               label="概要"
-              style={{ fontSize: '20px' }}
+              style={{ fontSize: '1.8vh' }}
               type="text"
               multiline
               fullWidth
@@ -891,7 +885,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleCloseAddQuestDialog}
               color="primary"
               variant="contained"
-              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
               fullWidth
             >
               キャンセル
@@ -900,7 +894,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleSubmitNewQuest}
               color="primary"
               variant="contained"
-              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
               fullWidth
             >
               追加
@@ -908,20 +902,20 @@ const handleIndividualHunterAchievementDialogClose = () => {
           </DialogActions>
         </Dialog>
         <Dialog open={deleteQuestDialogOpen} onClose={handleDeleteQuestDialogClose} fullWidth>
-          <DialogTitle align="center" style={{ fontSize: '24px', marginBottom: '20px', fontFamily: 'NotoSansCJK-Black' }} >クエストの削除</DialogTitle>
+          <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }} >クエストの削除</DialogTitle>
           <DialogContent>
             <FormControl fullWidth margin="dense">
-              <InputLabel style={{ fontSize: '20px' }} >クエスト選択</InputLabel>
+              <InputLabel style={{ fontSize: '1.8vh' }} >クエスト選択</InputLabel>
               <Select
                 value={selectedDeleteQuest}
                 label="削除するクエストの選択"
                 onChange={handleDeleteQuestChange}
                 style={{
-                  fontSize: '20px',
+                  fontSize: '1.8vh',
                   }}
                 >
                 {quests.filter(quest => (hunter === 'ALL' || quest.client === hunter)).map(quest => (
-                  <MenuItem key={quest.id} value={quest.id} style={{ fontSize: '20px' }} >
+                  <MenuItem key={quest.id} value={quest.id} style={{ fontSize: '1.8vh' }} >
                     {quest.title}
                   </MenuItem>
                 ))}
@@ -933,7 +927,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleDeleteQuestDialogClose}
               color="primary"
               variant="contained"
-              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
               fullWidth
             >
               キャンセル
@@ -942,7 +936,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleDeleteQuest}
               color="primary"
               variant="contained"
-              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
               fullWidth
             >
               削除
@@ -950,14 +944,14 @@ const handleIndividualHunterAchievementDialogClose = () => {
           </DialogActions>
         </Dialog>
         <Dialog open={deleteHunterDialogOpen} onClose={handleDeleteHunterDialogClose} fullWidth>
-          <DialogTitle align="center" style={{ fontSize: '24px', marginBottom: '20px', fontFamily: 'NotoSansCJK-Black' }} >クエストの削除</DialogTitle>
+          <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }} >クエストの削除</DialogTitle>
           <DialogContent>
             <Typography
               variant="body1"
               align="center"
               style={{
                 fontFamily: 'NotoSansCJK-Black',
-                fontSize: '20px',
+                fontSize: '1.8vh',
                 }}
             >
               本当にこのアカウントを削除してもよろしいですか。
@@ -968,7 +962,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleDeleteHunterDialogClose}
               color="primary"
               variant="contained"
-              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
               fullWidth
             >
               いいえ
@@ -977,7 +971,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleDeleteHunter}
               color="primary"
               variant="contained"
-              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
               fullWidth
             >
               はい
@@ -985,20 +979,20 @@ const handleIndividualHunterAchievementDialogClose = () => {
           </DialogActions>
         </Dialog>
         <Dialog open={completeQuestDialogOpen} onClose={handleCompleteQuestDialogClose} fullWidth>
-          <DialogTitle align="center" style={{ fontSize: '24px', marginBottom: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+          <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }}>
             クエストの完了
           </DialogTitle>
           <DialogContent>
             <FormControl fullWidth margin="dense">
-              <InputLabel style={{ fontSize: '20px' }}>クエスト選択</InputLabel>
+              <InputLabel style={{ fontSize: '1.8vh' }}>クエスト選択</InputLabel>
               <Select
                 value={selectedCompleteQuest}
                 label="完了するクエストの選択"
                 onChange={handleCompleteQuestChange}
-                style={{ fontSize: '20px' }}
+                style={{ fontSize: '1.8vh' }}
               >
                 {quests.filter(quest => (hunter === 'ALL' || quest.client === hunter) && !quest.completed).map(quest => (
-                  <MenuItem key={quest.id} value={quest.id} style={{ fontSize: '20px' }}>
+                  <MenuItem key={quest.id} value={quest.id} style={{ fontSize: '1.8vh' }}>
                     {quest.title}
                   </MenuItem>
                 ))}
@@ -1010,7 +1004,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleCompleteQuestDialogClose}
               color="primary"
               variant="contained"
-              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
               fullWidth
             >
               キャンセル
@@ -1019,7 +1013,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleCompleteQuest}
               color="primary"
               variant="contained"
-              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
               fullWidth
             >
               完了
@@ -1027,35 +1021,35 @@ const handleIndividualHunterAchievementDialogClose = () => {
           </DialogActions>
         </Dialog>
         <Dialog open={rankingDialogOpen} onClose={handleRankingDialogClose} fullWidth maxWidth="md">
-          <DialogTitle align="center" style={{ fontSize: '24px', marginBottom: '20px', fontFamily: 'NotoSansCJK-Black' }}>ランキング</DialogTitle>
+          <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }}>ランキング</DialogTitle>
           <DialogContent>
             <TableContainer component={Paper}>
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>順位</TableCell>
-                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>ハンター名</TableCell>
-                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>得点</TableCell>
-                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>S</TableCell>
-                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>A</TableCell>
-                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>B</TableCell>
-                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>C</TableCell>
-                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>D</TableCell>
-                    <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>E</TableCell>
+                    <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>順位</TableCell>
+                    <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>ハンター名</TableCell>
+                    <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>得点</TableCell>
+                    <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>S</TableCell>
+                    <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>A</TableCell>
+                    <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>B</TableCell>
+                    <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>C</TableCell>
+                    <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>D</TableCell>
+                    <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>E</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {createRanking(rankCounts).map((item, index) => (
                     <TableRow key={item.hunterName}>
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{index + 1}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.hunterName}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.score}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.S || 0}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.A || 0}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.B || 0}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.C || 0}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.D || 0}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.E || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{index + 1}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.hunterName}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.score}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.S || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.A || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.B || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.C || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.D || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.E || 0}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -1067,7 +1061,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleRankingDialogClose}
               color="primary"
               variant="contained"
-              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} 
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
               fullWidth
             >
               閉じる
@@ -1077,9 +1071,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
         
         {/* クエスト・アカウント管理系のレスポンス */}
         <Dialog open={errorDialogOpen} onClose={handleErrorDialogClose}>
-            <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }} >エラー</DialogTitle>
+            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }} >エラー</DialogTitle>
             <DialogContent>
-            <DialogContentText style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} >
+            <DialogContentText style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
                 接続エラーが発生しました。
             </DialogContentText>
             </DialogContent>
@@ -1088,7 +1082,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 onClick={handleErrorDialogClose}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} 
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
                 fullWidth
             >
                 理解した
@@ -1096,9 +1090,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </DialogActions>
         </Dialog>
         <Dialog open={addQuestSuccessDialogOpen} onClose={handleAddQuestSuccessDialogClose}>
-            <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
+            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
             <DialogContent>
-            <DialogContentText align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} >
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
                 正常に入力された内容でクエストを依頼できました。
             </DialogContentText>
             </DialogContent>
@@ -1107,7 +1101,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 onClick={handleAddQuestSuccessDialogClose}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} 
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
                 fullWidth
             >
                 理解した
@@ -1115,9 +1109,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </DialogActions>
         </Dialog>
         <Dialog open={deleteQuestSuccessDialogOpen} onClose={handleDeleteQuestSuccessDialogClose}>
-            <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
+            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
             <DialogContent>
-            <DialogContentText align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} >
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
                 正常に指定されたクエストを削除しました。
             </DialogContentText>
             </DialogContent>
@@ -1126,7 +1120,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 onClick={handleDeleteQuestSuccessDialogClose}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} 
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
                 fullWidth
             >
                 理解した
@@ -1134,9 +1128,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </DialogActions>
         </Dialog>
         <Dialog open={deleteHunterSuccessDialogOpen} onClose={handleDeleteHunterSuccessDialogClose}>
-            <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
+            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
             <DialogContent>
-            <DialogContentText align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} >
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
                 正常に指定されたハンターを削除しました。
             </DialogContentText>
             </DialogContent>
@@ -1145,7 +1139,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 onClick={handleDeleteHunterSuccessDialogClose}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} 
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
                 fullWidth
             >
                 理解した
@@ -1153,9 +1147,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </DialogActions>
         </Dialog>
         <Dialog open={accpetQuestSuccessDialogOpen} onClose={handleAcceptQuestDialogClose}>
-            <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
+            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
             <DialogContent>
-            <DialogContentText align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} >
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
                 正常に指定されたクエストを受諾しました。
             </DialogContentText>
             </DialogContent>
@@ -1164,7 +1158,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 onClick={handleAcceptQuestDialogClose}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} 
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
                 fullWidth
             >
                 理解した
@@ -1172,9 +1166,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </DialogActions>
         </Dialog>
         <Dialog open={questAcceptorDiscardSuccessDialogOpen} onClose={handleQuestAcceptorDiscardDialogClose}>
-            <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
+            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
             <DialogContent>
-            <DialogContentText align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} >
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
                 正常に指定されたクエストのメンバーから外れました。
             </DialogContentText>
             </DialogContent>
@@ -1183,7 +1177,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 onClick={handleQuestAcceptorDiscardDialogClose}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} 
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
                 fullWidth
             >
                 理解した
@@ -1191,9 +1185,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </DialogActions>
         </Dialog>
         <Dialog open={completeQuestSuccessDialogOpen} onClose={handleCompleteQuestSuccessDialogClose}>
-            <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
+            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
             <DialogContent>
-            <DialogContentText align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} >
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
                 正常に指定されたクエストを完了しました。
             </DialogContentText>
             </DialogContent>
@@ -1202,7 +1196,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 onClick={handleCompleteQuestSuccessDialogClose}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} 
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
                 fullWidth
             >
                 理解した
@@ -1210,9 +1204,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </DialogActions>
         </Dialog>
         <Dialog open={isDuplicateDialogOpen} onClose={() => setIsDuplicateDialogOpen(false)}>
-          <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>エラー</DialogTitle>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>エラー</DialogTitle>
           <DialogContent>
-            <DialogContentText align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
               このクエストは既に受諾しています。
             </DialogContentText>
           </DialogContent>
@@ -1221,7 +1215,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={() => setIsDuplicateDialogOpen(false)}
               color="primary"
               variant="contained"
-              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} 
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
               fullWidth
             >
               閉じる
@@ -1231,26 +1225,26 @@ const handleIndividualHunterAchievementDialogClose = () => {
 
         {/* 実績ダイアログ */}
         <Dialog open={isAchievementDialogOpen} onClose={handleIndividualAchievementDialogClose} fullWidth maxWidth="md">
-          <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>
             {hunter}の実績
           </DialogTitle>
-          <DialogContent style={{ height: '400px', overflowY: 'auto' }}>
+          <DialogContent style={{ height: '80vh', overflowY: 'auto' }}>
             {achievements.length > 0 ? (
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="実績テーブル">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト</TableCell>
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>ランク</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>ランク</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {achievements.map((achievement, index) => (
                       <TableRow key={index}>
-                        <TableCell align="center" component="th" scope="row" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+                        <TableCell align="center" component="th" scope="row" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
                           {achievement.quest_title}
                         </TableCell>
-                        <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+                        <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
                           {achievement.quest_rank}
                         </TableCell>
                       </TableRow>
@@ -1259,7 +1253,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 </Table>
               </TableContainer>
             ) : (
-              <Typography variant="body1" align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+              <Typography variant="body1" align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
                 実績がありません。
               </Typography>
             )}
@@ -1269,7 +1263,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleIndividualAchievementDialogClose}
               color="primary"
               variant="contained"
-              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} 
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
               fullWidth
             >
               閉じる
@@ -1277,7 +1271,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
           </DialogActions>
         </Dialog>
         <Dialog open={isAllHuntersDialogOpen} onClose={handleAllHuntersDialogClose}>
-          <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>実績を表示するユーザーの選択</DialogTitle>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>実績を表示するユーザーの選択</DialogTitle>
           <DialogContent>
             <FormControl fullWidth margin="dense">
               <InputLabel id="hunter-select-label">実績を表示するユーザーの選択</InputLabel>
@@ -1314,34 +1308,34 @@ const handleIndividualHunterAchievementDialogClose = () => {
           </DialogActions>
         </Dialog>
         <Dialog open={isIndividualHunterAchievementDialogOpen} onClose={handleIndividualHunterAchievementDialogClose} fullWidth maxWidth="md">
-          <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>
             {selectedHunter}の実績
           </DialogTitle>
-          <DialogContent style={{ height: '400px', overflowY: 'auto' }}>
+          <DialogContent style={{ height: '80vh', overflowY: 'auto' }}>
             {achievements.length > 0 ? (
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="実績テーブル">
                   <TableHead>
                     <TableRow>
                       {selectedHunter === 'ALL' && (
-                        <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>ハンター名</TableCell>
+                        <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>ハンター名</TableCell>
                       )}
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト</TableCell>
-                      <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>ランク</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>ランク</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {achievements.map((achievement, index) => (
                       <TableRow key={index}>
                         {selectedHunter === 'ALL' && (
-                          <TableCell align="center" component="th" scope="row" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+                          <TableCell align="center" component="th" scope="row" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
                             {achievement.hunter_name}
                           </TableCell>
                         )}
-                        <TableCell align="center" component="th" scope="row" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+                        <TableCell align="center" component="th" scope="row" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
                           {achievement.quest_title}
                         </TableCell>
-                        <TableCell align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+                        <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
                           {achievement.quest_rank}
                         </TableCell>
                       </TableRow>
@@ -1350,7 +1344,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 </Table>
               </TableContainer>
             ) : (
-              <Typography variant="body1" align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+              <Typography variant="body1" align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
                 実績がありません。
               </Typography>
             )}
@@ -1360,7 +1354,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleIndividualHunterAchievementDialogClose}
               color="primary"
               variant="contained"
-              style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }} 
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
               fullWidth
             >
               閉じる
@@ -1370,7 +1364,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
 
         {/* ALL用 */}
         <Dialog open={acceptQuestManagementDialogOpen} onClose={handleAcceptQuestManagementDialogClose}>
-          <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト受諾者管理</DialogTitle>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト受諾者管理</DialogTitle>
           <DialogContent>
             <FormControl fullWidth margin="dense">
               <InputLabel id="hunter-select-label">クエストを受諾するユーザーの選択</InputLabel>
@@ -1407,7 +1401,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
           </DialogActions>
         </Dialog>
         <Dialog open={questAcceptorDiscardManagementDialogOpen} onClose={handleQuestAcceptorDiscardManagementDialogClose}>
-          <DialogTitle align='center' style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>クエスト破棄管理</DialogTitle>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト破棄管理</DialogTitle>
           <DialogContent>
             <FormControl fullWidth margin="dense">
               <InputLabel id="hunter-select-label">クエストを破棄するユーザーの選択</InputLabel>

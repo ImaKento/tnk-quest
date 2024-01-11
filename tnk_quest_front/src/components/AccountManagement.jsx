@@ -140,23 +140,23 @@ function AccountManagement({ onLogin, onSubmit }) {
                     >
                     ログイン
                 </Button>
-                <img src="/image/entry.png" alt="エントリー" style={{ maxWidth: '70%', height: 'auto', margin: '10px' }} />
+                <img src="/image/entry.png" alt="エントリー" style={{ maxWidth: '70%', height: 'auto', margin: '1.5vh' }} />
             </div>
         </div>
 
 
         {/* アカウント作成ダイアログ */}
         <Dialog open={isCreateAccountOpen} onClose={handleCreateAccountClose}>
-            <DialogTitle align="center" style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>アカウント作成</DialogTitle>
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.5vh', fontFamily: 'NotoSansCJK-Black' }}>アカウント作成</DialogTitle>
             <DialogContent>
-            <DialogContentText align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
                 新しいアカウントを作成してください。
             </DialogContentText>
             <TextField
                 autoFocus
                 margin="dense"
                 id="name"
-                style={{ fontSize: '20px' }} 
+                style={{ fontSize: '1.8vh' }} 
                 label="ユーザー名"
                 type="text"
                 value={username}
@@ -167,7 +167,7 @@ function AccountManagement({ onLogin, onSubmit }) {
             <TextField
                 margin="dense"
                 id="password"
-                style={{ fontSize: '20px' }} 
+                style={{ fontSize: '1.8vh' }} 
                 label="パスワード"
                 type="password"
                 required
@@ -178,7 +178,7 @@ function AccountManagement({ onLogin, onSubmit }) {
             <TextField
                 margin="dense"
                 id="confirmPassword"
-                style={{ fontSize: '20px' }} 
+                style={{ fontSize: '1.8vh' }} 
                 label="パスワード確認"
                 type="password"
                 required
@@ -194,7 +194,7 @@ function AccountManagement({ onLogin, onSubmit }) {
                 onClick={handleCreateAccountClose}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
                 fullWidth
             >
                 キャンセル
@@ -203,7 +203,7 @@ function AccountManagement({ onLogin, onSubmit }) {
                 onClick={handleCreateAccountSubmit}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
                 fullWidth
                 disabled={passwordMismatchError || !password || !confirmPassword}
             >
@@ -214,16 +214,16 @@ function AccountManagement({ onLogin, onSubmit }) {
 
         {/* ログインダイアログ */}
         <Dialog open={isLoginOpen} onClose={handleLoginClose}>
-            <DialogTitle align="center" style={{ fontSize: '24px', margin: '20px', fontFamily: 'NotoSansCJK-Black' }}>ログイン</DialogTitle>
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.5vh', fontFamily: 'NotoSansCJK-Black' }}>ログイン</DialogTitle>
             <DialogContent>
-            <DialogContentText align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
                 アカウント情報を入力してログインしてください。
             </DialogContentText>
             <TextField
                 autoFocus
                 margin="dense"
                 id="name"
-                style={{ fontSize: '20px' }} 
+                style={{ fontSize: '1.8vh' }} 
                 label="ユーザー名"
                 type="text"
                 value={username}
@@ -234,7 +234,7 @@ function AccountManagement({ onLogin, onSubmit }) {
             <TextField
                 margin="dense"
                 id="password"
-                style={{ fontSize: '20px' }} 
+                style={{ fontSize: '1.8vh' }} 
                 label="パスワード"
                 type="password"
                 required
@@ -248,7 +248,7 @@ function AccountManagement({ onLogin, onSubmit }) {
                 onClick={handleLoginClose}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
                 fullWidth
             >
                 キャンセル
@@ -257,7 +257,7 @@ function AccountManagement({ onLogin, onSubmit }) {
                 onClick={handleLogin}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
                 fullWidth
             >
                 ログイン
@@ -267,9 +267,9 @@ function AccountManagement({ onLogin, onSubmit }) {
         
         {/* エラーダイアログ */}
         <Dialog open={signupErrorDialogOpen} onClose={handleLoginClose}>
-            <DialogTitle align="center" style={{ fontSize: '24px', marginBottom: '20px', fontFamily: 'NotoSansCJK-Black' }}>エラー</DialogTitle>
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }}>エラー</DialogTitle>
             <DialogContent>
-            <DialogContentText align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
                 入力されたユーザー名は既に使われています。
             </DialogContentText>
             </DialogContent>
@@ -278,7 +278,7 @@ function AccountManagement({ onLogin, onSubmit }) {
                 onClick={handleSinupErrorDialogClose}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
                 fullWidth
             >
                 理解した
@@ -287,9 +287,9 @@ function AccountManagement({ onLogin, onSubmit }) {
         </Dialog>
 
         <Dialog open={loginErrorDialogOpen} onClose={handleLoginClose}>
-            <DialogTitle align="center" style={{ fontSize: '24px', marginBottom: '20px', fontFamily: 'NotoSansCJK-Black' }}>エラー</DialogTitle>
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }}>エラー</DialogTitle>
             <DialogContent>
-            <DialogContentText align="center" style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}>
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
                 入力された情報ではログインできません。
             </DialogContentText>
             </DialogContent>
@@ -298,7 +298,7 @@ function AccountManagement({ onLogin, onSubmit }) {
                 onClick={handleLoginErrorDialogClose}
                 color="primary"
                 variant="contained"
-                style={{ fontSize: '20px', fontFamily: 'NotoSansCJK-Black' }}
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
                 fullWidth
             >
                 理解した

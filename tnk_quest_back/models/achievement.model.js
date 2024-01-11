@@ -16,7 +16,7 @@ Achievement.init({
     modelName: 'achievement' 
 });
 
-Achievement.belongsTo(Hunters, { foreignKey: 'hunterId', as: 'hunter' });
-Hunters.hasMany(Achievement, { foreignKey: 'hunterId', as: 'achievements' });
+Achievement.belongsTo(Hunters, { foreignKey: 'hunterId', as: 'hunter', onDelete: 'CASCADE' });
+Hunters.hasMany(Achievement, { foreignKey: 'hunterId', as: 'achievements', onDelete: 'CASCADE' });
 
 module.exports = Achievement;
