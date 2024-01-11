@@ -146,6 +146,7 @@ function QuestSelection({ hunter, deleteHunter }) {
 
   const handleHunterDeleteManagementSuccessDialogClose = () => {
     setHunterDeleteManagementSuccessDialogOpen(false);
+    setHunterDeleteManagementDialogOpen(false);
   }
 
   const handleAcceptQuestDialogClose = () => {
@@ -297,7 +298,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
       });
   
       if (response.ok) {
-        if (hunterName === 'ALL') {
+        if (hunter === 'ALL') {
           setHunterDeleteManagementSuccessDialogOpen(true);
         } else {
           setDeleteHunterSuccessDialogOpen(true);
@@ -962,7 +963,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
           </DialogActions>
         </Dialog>
         <Dialog open={deleteHunterDialogOpen} onClose={handleDeleteHunterDialogClose} fullWidth>
-          <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }} >クエストの削除</DialogTitle>
+          <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }} >ハンターの削除</DialogTitle>
           <DialogContent>
             <Typography
               variant="body1"
@@ -1512,7 +1513,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </DialogActions>
         </Dialog>
         <Dialog open={hunterDeleteManagementSuccessDialogOpen} onClose={handleHunterDeleteManagementSuccessDialogClose}>
-            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
+            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>ハンター削除</DialogTitle>
             <DialogContent>
             <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
                 正常に指定されたハンターを削除しました。
