@@ -24,8 +24,10 @@ function QuestSelection({ hunter, deleteHunter }) {
   const [accpetQuestSuccessDialogOpen, setAccpetQuestSuccessDialogOpen] = useState(false);
   const [questAcceptorDiscardSuccessDialogOpen, setQuestAcceptorDiscardSuccessDialogOpen] = useState(false);
   const [completeQuestSuccessDialogOpen, setCompleteQuestSuccessDialogOpen] = useState(false);
+  const [hunterDeleteManagementSuccessDialogOpen, setHunterDeleteManagementSuccessDialogOpen] = useState(false);
   const [acceptQuestManagementDialogOpen, setAcceptQuestManagementDialogOpen] = useState(false);
   const [questAcceptorDiscardManagementDialogOpen, setQuestAcceptorDiscardManagementDialogOpen] = useState(false);
+  const [hunterDeleteManagementDialogOpen, setHunterDeleteManagementDialogOpen] = useState(false);
   const [rankingDialogOpen, setRankingDialogOpen] = useState(false);
   const [errorDialogOpen, setErrorDialogOpen] = useState(false);
   const [isDuplicateDialogOpen, setIsDuplicateDialogOpen] = useState(false);
@@ -142,6 +144,10 @@ function QuestSelection({ hunter, deleteHunter }) {
     setCompleteQuestSuccessDialogOpen(false);
   }
 
+  const handleHunterDeleteManagementSuccessDialogClose = () => {
+    setHunterDeleteManagementSuccessDialogOpen(false);
+  }
+
   const handleAcceptQuestDialogClose = () => {
     setAccpetQuestSuccessDialogOpen(false);
   }
@@ -186,6 +192,15 @@ function QuestSelection({ hunter, deleteHunter }) {
   
   const handleQuestAcceptorDiscardManagementDialogClose = () => {
     setQuestAcceptorDiscardManagementDialogOpen(false);
+  }
+
+  const handleHunterDeleteManagementDialogOpen = () => {
+    fetchAllHunters();
+    setHunterDeleteManagementDialogOpen(true);
+  }
+
+  const handleHunterDeleteManagementDialogClose = () => {
+    setHunterDeleteManagementDialogOpen(false);
   }
 
   const handleRankingDialogClose = () => {
@@ -275,22 +290,25 @@ const handleIndividualHunterAchievementDialogClose = () => {
     handleDeleteQuestDialogClose();
   };
 
-  // ハンターの削除を処理する関数
-  const handleDeleteHunter = async () => {
+  const handleDeleteHunter = async (hunterName) => {
     try {
-      const response = await fetch(`http://192.168.11.52:3000/deleteHunter/${hunter}/`, {
+      const response = await fetch(`http://192.168.11.52:3000/deleteHunter/${hunterName}/`, {
         method: 'DELETE',
       });
-
+  
       if (response.ok) {
-        setDeleteHunterSuccessDialogOpen(true);
+        if (hunterName === 'ALL') {
+          setHunterDeleteManagementSuccessDialogOpen(true);
+        } else {
+          setDeleteHunterSuccessDialogOpen(true);
+        }
       } else {
         setErrorDialogOpen(true);
       }
     } catch (error) {
       setErrorDialogOpen(true);
     }
-
+  
     handleDeleteHunterDialogClose();
   };
 
@@ -776,7 +794,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
           <Divider />
           <MenuItem onClick={handleDeleteQuestDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>クエスト削除</MenuItem>
           <Divider />
-          <MenuItem onClick={handleDeleteHunterDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>アカウント削除</MenuItem>
+          <MenuItem onClick={() => hunter === 'ALL' ? handleHunterDeleteManagementDialogOpen() : handleDeleteHunterDialogOpen()} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>アカウント削除</MenuItem>
           <Divider />
           <MenuItem onClick={handleIndividualAchievementDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>実績</MenuItem>
           <Divider />
@@ -968,7 +986,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               いいえ
             </Button>
             <Button
-              onClick={handleDeleteHunter}
+              onClick={() => handleDeleteHunter(hunter)}
               color="primary"
               variant="contained"
               style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
@@ -1109,7 +1127,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </DialogActions>
         </Dialog>
         <Dialog open={deleteQuestSuccessDialogOpen} onClose={handleDeleteQuestSuccessDialogClose}>
-            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
+            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト削除</DialogTitle>
             <DialogContent>
             <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
                 正常に指定されたクエストを削除しました。
@@ -1436,6 +1454,81 @@ const handleIndividualHunterAchievementDialogClose = () => {
               確定
             </Button>
           </DialogActions>
+        </Dialog>
+        <Dialog open={hunterDeleteManagementDialogOpen} onClose={handleHunterDeleteManagementDialogClose}>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>アカウント削除管理</DialogTitle>
+          <DialogContent>
+            <FormControl fullWidth margin="dense">
+              <InputLabel id="hunter-select-label">ユーザーの選択</InputLabel>
+              <Select
+                labelId="hunter-select-label"
+                id="hunter-select"
+                value={selectedHunter}
+                label="ユーザーの選択"
+                onChange={handleHunterSelectChange}
+              >
+                {allHunters.map(hunter => (
+                  <MenuItem key={hunter} value={hunter}>{hunter}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleHunterDeleteManagementDialogClose}
+              color="primary"
+              variant="contained"
+              fullWidth
+            >
+              閉じる
+            </Button>
+            <Button
+              onClick={() => handleDeleteHunter(selectedHunter)}
+              color="primary"
+              variant="contained"
+              fullWidth
+            >
+              確定
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={deleteQuestSuccessDialogOpen} onClose={handleDeleteQuestSuccessDialogClose}>
+            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト削除</DialogTitle>
+            <DialogContent>
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
+                正常に指定されたクエストを削除しました。
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button
+                onClick={handleDeleteQuestSuccessDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
+                fullWidth
+            >
+                理解した
+            </Button>
+            </DialogActions>
+        </Dialog>
+        <Dialog open={hunterDeleteManagementSuccessDialogOpen} onClose={handleHunterDeleteManagementSuccessDialogClose}>
+            <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
+            <DialogContent>
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
+                正常に指定されたハンターを削除しました。
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button
+                onClick={handleHunterDeleteManagementSuccessDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
+                fullWidth
+            >
+                理解した
+            </Button>
+            </DialogActions>
         </Dialog>
       </Grid>
   );
