@@ -29,7 +29,7 @@ module.exports = {
         defaultValue: "C"
       },
       overview: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000),
       },
       hunters: {
         type: Sequelize.STRING,

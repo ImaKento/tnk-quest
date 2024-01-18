@@ -25,7 +25,7 @@ Quests.init({
         defaultValue: "C"
     },
     overview: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(1000),
         allowNull: true
     },
     hunters: {
