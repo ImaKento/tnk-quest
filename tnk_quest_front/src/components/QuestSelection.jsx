@@ -12,9 +12,12 @@ function QuestSelection({ hunter, deleteHunter }) {
   const [rankCounts, setRankCounts] = useState({});
   const buttonRef = useRef(null);
   const [isAddQuestDialogOpen, setIsAddQuestDialogOpen] = useState(false);
+  const [selectedEditQuestDialogOpen, setSelectedEditQuestDialogOpen] = useState(false);
+  const [editQuestDialogOpen, setEditQuestDialogOpen] = useState(false)
   const [completeQuestDialogOpen, setCompleteQuestDialogOpen] = useState(false);
   const [backgroundImageIndex, setBackgroundImageIndex] = useState(0);
   const [selectedDeleteQuest, setSelectedDeleteQuest] = useState('');
+  const [selectedEditQuest, setSelectedEditQuest] = useState('');
   const [selectedCompleteQuest, setSelectedCompleteQuest] = useState('');
   const [deleteQuestDialogOpen, setDeleteQuestDialogOpen] = useState(false);
   const [deleteHunterDialogOpen, setDeleteHunterDialogOpen] = useState(false);
@@ -45,6 +48,15 @@ function QuestSelection({ hunter, deleteHunter }) {
     rank: '',
     overview: '',
   });
+  // 編集可能なクエストのデータを格納する状態変数を追加
+  const [editableQuestData, setEditableQuestData] = useState({
+    client: '',
+    title: '',
+    deadline: '',
+    capacity: '',
+    rank: '',
+    overview: '',
+  });
   // クエストの完了イメージを表示するためのスタイル
   const completedOverlayStyle = {
     position: 'absolute',
@@ -57,8 +69,22 @@ function QuestSelection({ hunter, deleteHunter }) {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
   };
+  // 表示ソート用定義
+  const rankOrder = {
+    "【緊急】": 1,
+    "Sランク": 2,
+    "Aランク": 3,
+    "Bランク": 4,
+    "Cランク": 5,
+    "Dランク": 6,
+    "Eランク": 7
+  };
+  const sortedQuests = quests.sort((a, b) => {
+    return rankOrder[a.rank] - rankOrder[b.rank];
+  });
   // ランキングのソート用定義
   const rankPoints = {
+    "【緊急】": 7,
     S: 7,
     A: 5,
     B: 4,
@@ -112,6 +138,28 @@ function QuestSelection({ hunter, deleteHunter }) {
     setSelectedDeleteQuest(event.target.value);
   };
 
+  // 選択されたクエストが変更されたときに、対応するクエストのデータを設定する
+  const handleSelectedEditQuestChange = (event) => {
+    const questId = event.target.value;
+    const quest = quests.find(q => q.id === questId);
+    if (quest) {
+      const formattedDeadline = quest.deadline ? convertToDateTimeLocal(quest.deadline) : '';
+      setEditableQuestData({
+        title: quest.title,
+        deadline: formattedDeadline,
+        capacity: quest.capacity,
+        rank: quest.rank,
+        overview: quest.overview,
+      });
+    }
+    setSelectedEditQuest(questId);
+  };
+  
+  const convertToDateTimeLocal = (isoString) => {
+    const date = new Date(isoString);
+    return date.toISOString().slice(0, 16); // 'YYYY-MM-DDTHH:mm' 形式に変換
+  };
+
   const handleCompleteQuestChange = (event) => {
     setSelectedCompleteQuest(event.target.value);
   };
@@ -130,6 +178,23 @@ function QuestSelection({ hunter, deleteHunter }) {
 
   const handleDeleteHunterDialogClose = () => {
     setDeleteHunterDialogOpen(false);
+  }
+
+  const handleSelectedEditQuestDialogOpen = () => {
+    setSelectedEditQuestDialogOpen(true);
+  }
+
+  const handleSelectedEditQuestDialogClose = () => {
+    setSelectedEditQuestDialogOpen(false);
+  }
+
+  const handleEditQuestDialogOpen = () => {
+    setEditQuestDialogOpen(true);
+    setSelectedEditQuestDialogOpen(false);
+  }
+
+  const handleEditQuestDialogClose = () => {
+    setEditQuestDialogOpen(false);
   }
 
   const handleCompleteQuestDialogOpen = () => {
@@ -211,7 +276,7 @@ function QuestSelection({ hunter, deleteHunter }) {
 // 全ユーザーのユーザーネームを取得する関数
 const fetchAllHunters = async () => {
   try {
-    const response = await fetch('http://192.168.11.52:3000/getHunters/');
+    const response = await fetch('http://localhost:3000/getHunters/');
     if (!response.ok) {
       setErrorDialogOpen(true);
     }
@@ -229,7 +294,7 @@ const handleHunterClick = async (hunterName) => {
   setIsIndividualHunterAchievementDialogOpen(true);
 
   // 実績データを取得
-  const response = await fetch(`http://192.168.11.52:3000/getAchievements/${hunterName}`);
+  const response = await fetch(`http://localhost:3000/getAchievements/${hunterName}`);
   if (response.ok) {
     const data = await response.json();
     setAchievements(data);
@@ -273,7 +338,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // クエストの削除を処理する関数
   const handleDeleteQuest = async () => {
     try {
-      const response = await fetch(`http://192.168.11.52:3000/deleteQuest/${selectedDeleteQuest}/`, {
+      const response = await fetch(`http://localhost:3000/deleteQuest/${selectedDeleteQuest}/`, {
         method: 'DELETE',
       });
 
@@ -293,7 +358,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
 
   const handleDeleteHunter = async (hunterName) => {
     try {
-      const response = await fetch(`http://192.168.11.52:3000/deleteHunter/${hunterName}/`, {
+      const response = await fetch(`http://localhost:3000/deleteHunter/${hunterName}/`, {
         method: 'DELETE',
       });
   
@@ -313,10 +378,33 @@ const handleIndividualHunterAchievementDialogClose = () => {
     handleDeleteHunterDialogClose();
   };
 
+  // クエストを編集する関数
+  const handleEditQuest = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/updateQuest/${selectedEditQuest}/`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editableQuestData),
+      });
+  
+      if (response.ok) {
+        // 更新成功時の処理
+      } else {
+        // エラー処理
+      }
+    } catch (error) {
+      // エラーハンドリング
+    }
+    handleEditQuestDialogClose();
+  };
+
+
   // クエストを完了する関数
   const handleCompleteQuest = async () => {
     try {
-      const response = await fetch('http://192.168.11.52:3000/completeQuest/', {
+      const response = await fetch('http://localhost:3000/completeQuest/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -340,7 +428,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
     setIsAchievementDialogOpen(true);
 
     // 実績データを取得
-    const response = await fetch(`http://192.168.11.52:3000/getAchievements/${hunter}`);
+    const response = await fetch(`http://localhost:3000/getAchievements/${hunter}`);
     if (response.ok) {
       const data = await response.json();
       setAchievements(data);
@@ -388,7 +476,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // クエストを追加する関数
   const handleSubmitNewQuest = async () => {
     try {
-      const response = await fetch('http://192.168.11.52:3000/addQuest/', {
+      const response = await fetch('http://localhost:3000/addQuest/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -401,6 +489,15 @@ const handleIndividualHunterAchievementDialogClose = () => {
         console.log(newQuest);
         handleCloseAddQuestDialog();
         setAddQuestSuccessDialogOpen(true);
+        // ここで状態をリセット
+        setNewQuest({
+          client: '',
+          title: '',
+          deadline: '',
+          capacity: '',
+          rank: '',
+          overview: '',
+        });
       } else {
         setErrorDialogOpen(true);
       }
@@ -412,7 +509,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // クエスト受諾する関数
   const handleAcceptQuest = async (hunterName) => {
     try {
-      const response = await fetch('http://192.168.11.52:3000/acceptQuest/', {
+      const response = await fetch('http://localhost:3000/acceptQuest/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -456,7 +553,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
       };
   
       // サーバーに送信してデータベースを更新
-      const response = await fetch(`http://192.168.11.52:3000/updateQuest/${selectedQuest.id}/`, {
+      const response = await fetch(`http://localhost:3000/updateQuest/${selectedQuest.id}/`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -476,7 +573,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
 
   const fetchAllRanksCount = async () => {
     try {
-      const response = await fetch('http://192.168.11.52:3000/getAllRanksCount');
+      const response = await fetch('http://localhost:3000/getAllRanksCount');
       if (response.ok) {
         const data = await response.json();
         setRankCounts(data);
@@ -492,7 +589,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // APIからクエストのリストを取得する関数
   const fetchQuests = async () => {
     try {
-      const response = await fetch('http://192.168.11.52:3000/getQuest/');
+      const response = await fetch('http://localhost:3000/getQuest/');
       const data = await response.json();
       if (response.ok) {
         setQuests(data); // 状態にクエストのリストを設定
@@ -520,14 +617,18 @@ const handleIndividualHunterAchievementDialogClose = () => {
   return (
       <Grid container spacing={2} style={{ marginTop: '4.0vh' }}>
         <Grid item xs={12} lg={3} style={{ display: 'flex', flexDirection: 'column' }}>
-          {quests.map(quest => (
+          {sortedQuests.map(quest => (
             <Button
               key={quest.id}
               variant="contained"
               onClick={() => handleQuestSelect(quest)}
               style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.5vh', margin: '1vh', backgroundColor: 'rgba(101, 67, 33, 0.7)' }}
             >
-              {quest.title}  {quest.rank}ランク
+              {quest.title}{'\u00A0\u00A0\u00A0'}
+              <span style={{ color: quest.rank === "【緊急】" ? 'rgb(255, 60, 60)' : 'inherit',
+                             textShadow: quest.rank === "【緊急】" ? '1px 1px black' : 'none' }}>
+                {quest.rank}
+              </span>
             </Button>
           ))}
         </Grid>
@@ -791,6 +892,8 @@ const handleIndividualHunterAchievementDialogClose = () => {
           <Divider />
           <MenuItem onClick={handleAddQuestDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>クエスト依頼</MenuItem>
           <Divider />
+          <MenuItem onClick={handleSelectedEditQuestDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh'}}>クエスト編集</MenuItem>
+          <Divider />
           <MenuItem onClick={handleCompleteQuestDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>クエスト完了</MenuItem>
           <Divider />
           <MenuItem onClick={handleDeleteQuestDialogOpen} style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '1.8vh', padding: '1.0vh' }}>クエスト削除</MenuItem>
@@ -880,12 +983,13 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 style={{ fontSize: '1.8vh' }} 
                 label="ランク"
               >
-                <MenuItem value="S" style={{ fontSize: '1.8vh' }}>S</MenuItem>
-                <MenuItem value="A" style={{ fontSize: '1.8vh' }}>A</MenuItem>
-                <MenuItem value="B" style={{ fontSize: '1.8vh' }}>B</MenuItem>
-                <MenuItem value="C" style={{ fontSize: '1.8vh' }}>C</MenuItem>
-                <MenuItem value="D" style={{ fontSize: '1.8vh' }}>D</MenuItem>
-                <MenuItem value="E" style={{ fontSize: '1.8vh' }}>E</MenuItem>
+                <MenuItem value="【緊急】" style={{ fontSize: '1.8vh' }}>緊急クエスト</MenuItem>
+                <MenuItem value="Sランク" style={{ fontSize: '1.8vh' }}>S</MenuItem>
+                <MenuItem value="Aランク" style={{ fontSize: '1.8vh' }}>A</MenuItem>
+                <MenuItem value="Bランク" style={{ fontSize: '1.8vh' }}>B</MenuItem>
+                <MenuItem value="Cランク" style={{ fontSize: '1.8vh' }}>C</MenuItem>
+                <MenuItem value="Dランク" style={{ fontSize: '1.8vh' }}>D</MenuItem>
+                <MenuItem value="Eランク" style={{ fontSize: '1.8vh' }}>E</MenuItem>
               </Select>
             </FormControl>
             <TextField
@@ -997,6 +1101,137 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </Button>
           </DialogActions>
         </Dialog>
+        <Dialog open={selectedEditQuestDialogOpen} onClose={handleSelectedEditQuestDialogClose} fullWidth>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black'}}>
+            クエストの編集
+          </DialogTitle>
+          <DialogContent>
+            <FormControl fullWidth margin='dense'>
+              <InputLabel style={{ fontSize: '1.8vh'}}>クエスト選択</InputLabel>
+              <Select
+                value={selectedEditQuest}
+                lavel="編集するクエストの選択"
+                onChange={handleSelectedEditQuestChange}
+                style={{ fontSize: '1.8vh' }}
+              >
+                {quests.filter(quest => (hunter === 'ALL' || quest.client === hunter) && !quest.completed).map(quest => (
+                  <MenuItem key={quest.id} value={quest.id} style={{ fontSize: '1.8vh'}}>
+                    {quest.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <Button 
+              onClick={handleSelectedEditQuestDialogClose}
+              color="primary"
+              variant="contained"
+              style={{ fontsize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+              fullWidth
+            >
+              キャンセル
+            </Button>
+            <Button
+              onClick={handleEditQuestDialogOpen}
+              color="primary"
+              variant="contained"
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+              fullWidth
+            >
+              編集   
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={editQuestDialogOpen} onClose={handleEditQuestDialogClose}>
+          <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black'}}>
+            クエストの詳細編集
+          </DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              style={{ fontSize: '1.8vh' }} 
+              label="タイトル"
+              type="text"
+              fullWidth
+              inputProps={{ maxLength: 15 }}
+              value={editableQuestData.title}
+              onChange={(e) => setEditableQuestData({ ...editableQuestData, title: e.target.value })}
+              helperText="タイトルは15文字以内で入力してください"
+              FormHelperTextProps={{
+                style: { color: 'red' }
+              }}
+            />
+            <TextField
+              margin="dense"
+              label="締切"
+              style={{ fontSize: '1.8vh' }} 
+              type="datetime-local"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              value={editableQuestData.deadline}
+              onChange={(e) => setEditableQuestData({ ...editableQuestData, deadline: e.target.value })}
+            />
+            <TextField
+              margin="dense"
+              label="定員"
+              style={{ fontSize: '1.8vh' }} 
+              type="number"
+              fullWidth
+              value={editableQuestData.capacity}
+              onChange={(e) => setEditableQuestData({ ...editableQuestData, capacity: e.target.value })}
+              InputProps={{ inputProps: { min: 0 } }}
+            />
+            <FormControl fullWidth margin="dense">
+              <InputLabel style={{ fontSize: '1.8vh' }} >ランク</InputLabel>
+              <Select
+                value={editableQuestData.rank}
+                onChange={(e) => setEditableQuestData({ ...editableQuestData, rank: e.target.value })}
+                style={{ fontSize: '1.8vh' }} 
+                label="ランク"
+              >
+                <MenuItem value="S" style={{ fontSize: '1.8vh' }}>S</MenuItem>
+                <MenuItem value="A" style={{ fontSize: '1.8vh' }}>A</MenuItem>
+                <MenuItem value="B" style={{ fontSize: '1.8vh' }}>B</MenuItem>
+                <MenuItem value="C" style={{ fontSize: '1.8vh' }}>C</MenuItem>
+                <MenuItem value="D" style={{ fontSize: '1.8vh' }}>D</MenuItem>
+                <MenuItem value="E" style={{ fontSize: '1.8vh' }}>E</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              margin="dense"
+              label="概要"
+              style={{ fontSize: '1.8vh' }}
+              type="text"
+              multiline
+              fullWidth
+              value={editableQuestData.overview}
+              onChange={(e) => setEditableQuestData({ ...editableQuestData, overview: e.target.value })}
+            />
+          </DialogContent>
+          <DialogActions>
+          <Button
+              onClick={handleEditQuestDialogClose}
+              color="primary"
+              variant="contained"
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
+              fullWidth
+            >
+              キャンセル
+            </Button>
+            <Button
+              onClick={handleEditQuest}
+              color="primary"
+              variant="contained"
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
+              fullWidth
+            >
+              編集
+            </Button>
+          </DialogActions>
+        </Dialog>
+
         <Dialog open={completeQuestDialogOpen} onClose={handleCompleteQuestDialogClose} fullWidth>
           <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }}>
             クエストの完了
