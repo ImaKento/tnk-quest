@@ -211,7 +211,7 @@ function QuestSelection({ hunter, deleteHunter }) {
 // 全ユーザーのユーザーネームを取得する関数
 const fetchAllHunters = async () => {
   try {
-    const response = await fetch('http://192.168.11.52:3000/getHunters/');
+    const response = await fetch('http://localhost:3000/getHunters/');
     if (!response.ok) {
       setErrorDialogOpen(true);
     }
@@ -229,7 +229,7 @@ const handleHunterClick = async (hunterName) => {
   setIsIndividualHunterAchievementDialogOpen(true);
 
   // 実績データを取得
-  const response = await fetch(`http://192.168.11.52:3000/getAchievements/${hunterName}`);
+  const response = await fetch(`http://localhost:3000/getAchievements/${hunterName}`);
   if (response.ok) {
     const data = await response.json();
     setAchievements(data);
@@ -273,7 +273,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // クエストの削除を処理する関数
   const handleDeleteQuest = async () => {
     try {
-      const response = await fetch(`http://192.168.11.52:3000/deleteQuest/${selectedDeleteQuest}/`, {
+      const response = await fetch(`http://localhost:3000/deleteQuest/${selectedDeleteQuest}/`, {
         method: 'DELETE',
       });
 
@@ -293,7 +293,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
 
   const handleDeleteHunter = async (hunterName) => {
     try {
-      const response = await fetch(`http://192.168.11.52:3000/deleteHunter/${hunterName}/`, {
+      const response = await fetch(`http://localhost:3000/deleteHunter/${hunterName}/`, {
         method: 'DELETE',
       });
   
@@ -316,7 +316,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // クエストを完了する関数
   const handleCompleteQuest = async () => {
     try {
-      const response = await fetch('http://192.168.11.52:3000/completeQuest/', {
+      const response = await fetch('http://localhost:3000/completeQuest/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -340,7 +340,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
     setIsAchievementDialogOpen(true);
 
     // 実績データを取得
-    const response = await fetch(`http://192.168.11.52:3000/getAchievements/${hunter}`);
+    const response = await fetch(`http://localhost:3000/getAchievements/${hunter}`);
     if (response.ok) {
       const data = await response.json();
       setAchievements(data);
@@ -388,7 +388,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // クエストを追加する関数
   const handleSubmitNewQuest = async () => {
     try {
-      const response = await fetch('http://192.168.11.52:3000/addQuest/', {
+      const response = await fetch('http://localhost:3000/addQuest/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -412,7 +412,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // クエスト受諾する関数
   const handleAcceptQuest = async (hunterName) => {
     try {
-      const response = await fetch('http://192.168.11.52:3000/acceptQuest/', {
+      const response = await fetch('http://localhost:3000/acceptQuest/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -456,7 +456,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
       };
   
       // サーバーに送信してデータベースを更新
-      const response = await fetch(`http://192.168.11.52:3000/updateQuest/${selectedQuest.id}/`, {
+      const response = await fetch(`http://localhost:3000/updateQuest/${selectedQuest.id}/`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -476,7 +476,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
 
   const fetchAllRanksCount = async () => {
     try {
-      const response = await fetch('http://192.168.11.52:3000/getAllRanksCount');
+      const response = await fetch('http://localhost:3000/getAllRanksCount');
       if (response.ok) {
         const data = await response.json();
         setRankCounts(data);
@@ -492,7 +492,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
   // APIからクエストのリストを取得する関数
   const fetchQuests = async () => {
     try {
-      const response = await fetch('http://192.168.11.52:3000/getQuest/');
+      const response = await fetch('http://localhost:3000/getQuest/');
       const data = await response.json();
       if (response.ok) {
         setQuests(data); // 状態にクエストのリストを設定
