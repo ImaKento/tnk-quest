@@ -347,6 +347,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
         setDeleteQuestSuccessDialogOpen(true);
         // クエストリストを更新するために再取得する
         fetchQuests();
+        setSelectedQuest(null)
       } else {
         setErrorDialogOpen(true);
       }
@@ -417,6 +418,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
         setAddQuestSuccessDialogOpen(true);
         fetchQuests();
         fetchQuestStatus();
+        setSelectedQuest(null)
       } else {
         // エラー処理
         setErrorDialogOpen(true);
@@ -446,6 +448,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
         handleCompleteQuestDialogClose();
         fetchQuests();
         fetchQuestStatus();
+        setSelectedQuest(null)
       } else {
         setErrorDialogOpen(true);
       }
@@ -578,6 +581,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
         setAccpetQuestSuccessDialogOpen(true);
         fetchQuests();
         fetchQuestStatus();
+        setSelectedQuest(null)
       } else if (response.status === 400) {
         // 重複エラーの場合
         setIsDuplicateDialogOpen(true);
@@ -625,6 +629,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
       setQuestAcceptorDiscardSuccessDialogOpen(true);
       fetchQuests();
       fetchQuestStatus();
+      setSelectedQuest(null)
     } catch (error) {
       setErrorDialogOpen(true);
     }
