@@ -6,7 +6,13 @@ const morgan = require('morgan');
 const app = express();
 
 // CORS設定：http://192.168.11.52からのリクエストを許可
+<<<<<<< HEAD
 app.use(cors());
+=======
+app.use(cors({
+    origin: 'http://192.168.11.52'
+}));
+>>>>>>> 6e5d6f8e3fbbb665d7f117d95efc91b24538a151
 
 app.use(bodyParser.json());
 

@@ -1,7 +1,11 @@
 {
   "files": {
     "main.css": "/static/css/main.7a210a85.css",
+<<<<<<< HEAD
     "main.js": "/static/js/main.fe6b65da.js",
+=======
+    "main.js": "/static/js/main.b66528e0.js",
+>>>>>>> 6e5d6f8e3fbbb665d7f117d95efc91b24538a151
     "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
     "static/media/NotoSansCJK-Black.ttc": "/static/media/NotoSansCJK-Black.4428afdf3213b859415b.ttc",
     "static/media/logo_bg.jpg": "/static/media/logo_bg.f8fbb168c65f159f02f4.jpg",
@@ -9,11 +13,19 @@
     "static/media/AoboshiOne-Regular.ttf": "/static/media/AoboshiOne-Regular.7721efdd17f9cd8ced01.ttf",
     "index.html": "/index.html",
     "main.7a210a85.css.map": "/static/css/main.7a210a85.css.map",
+<<<<<<< HEAD
     "main.fe6b65da.js.map": "/static/js/main.fe6b65da.js.map",
+=======
+    "main.b66528e0.js.map": "/static/js/main.b66528e0.js.map",
+>>>>>>> 6e5d6f8e3fbbb665d7f117d95efc91b24538a151
     "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7a210a85.css",
+<<<<<<< HEAD
     "static/js/main.fe6b65da.js"
+=======
+    "static/js/main.b66528e0.js"
+>>>>>>> 6e5d6f8e3fbbb665d7f117d95efc91b24538a151
   ]
 }
