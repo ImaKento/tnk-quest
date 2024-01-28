@@ -1,17 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const morgan = require('morgan');
 
 const app = express();
 
-// CORS設定：http://localhostからのリクエストを許可
+// CORS設定：http://192.168.11.52からのリクエストを許可
 app.use(cors());
 
 app.use(bodyParser.json());
-
-app.use(morgan('dev'));
-
 
 // publicディレクトリを静的ファイルの提供用に設定
 app.use(express.static('./public'));

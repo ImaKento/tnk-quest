@@ -71,7 +71,7 @@ function QuestSelection({ hunter, deleteHunter }) {
   };
   // 表示ソート用定義
   const rankOrder = {
-    "【緊急】": 1,
+    "緊急": 1,
     "Sランク": 2,
     "Aランク": 3,
     "Bランク": 4,
@@ -84,13 +84,13 @@ function QuestSelection({ hunter, deleteHunter }) {
   });
   // ランキングのソート用定義
   const rankPoints = {
-    "【緊急】": 7,
-    S: 7,
-    A: 5,
-    B: 4,
-    C: 3,
-    D: 2,
-    E: 1
+    "緊急": 7,
+    "Sランク": 7,
+    "Aランク": 5,
+    "Bランク": 4,
+    "Cランク": 3,
+    "Dランク": 2,
+    "Eランク": 1
   };
   // ランキングに関する計算
   const calculateScore = (ranks) => {
@@ -138,7 +138,7 @@ function QuestSelection({ hunter, deleteHunter }) {
     setSelectedDeleteQuest(event.target.value);
   };
 
-  // 選択されたクエストが変更されたときに、対応するクエストのデータを設定する
+  // 選択されたクエストが変更されたときに、対応するクエストのデータを設定
   const handleSelectedEditQuestChange = (event) => {
     const questId = event.target.value;
     const quest = quests.find(q => q.id === questId);
@@ -625,8 +625,10 @@ const handleIndividualHunterAchievementDialogClose = () => {
               style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.5vh', margin: '1vh', backgroundColor: 'rgba(101, 67, 33, 0.7)' }}
             >
               {quest.title}{'\u00A0\u00A0\u00A0'}
-              <span style={{ color: quest.rank === "【緊急】" ? 'rgb(255, 60, 60)' : 'inherit',
-                             textShadow: quest.rank === "【緊急】" ? '1px 1px black' : 'none' }}>
+              <span style={{
+                color: quest.rank === "緊急" ? 'rgb(255, 60, 60)' : 'inherit',
+                textShadow: quest.rank === "緊急" ? '1px 1px black' : 'none',
+              }}>
                 {quest.rank}
               </span>
             </Button>
@@ -983,7 +985,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 style={{ fontSize: '1.8vh' }} 
                 label="ランク"
               >
-                <MenuItem value="【緊急】" style={{ fontSize: '1.8vh' }}>緊急クエスト</MenuItem>
+                <MenuItem value="緊急" style={{ fontSize: '1.8vh' }}>緊急クエスト</MenuItem>
                 <MenuItem value="Sランク" style={{ fontSize: '1.8vh' }}>S</MenuItem>
                 <MenuItem value="Aランク" style={{ fontSize: '1.8vh' }}>A</MenuItem>
                 <MenuItem value="Bランク" style={{ fontSize: '1.8vh' }}>B</MenuItem>
@@ -1127,7 +1129,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleSelectedEditQuestDialogClose}
               color="primary"
               variant="contained"
-              style={{ fontsize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
               fullWidth
             >
               キャンセル
@@ -1136,7 +1138,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               onClick={handleEditQuestDialogOpen}
               color="primary"
               variant="contained"
-              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
               fullWidth
             >
               編集   
@@ -1191,12 +1193,13 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 style={{ fontSize: '1.8vh' }} 
                 label="ランク"
               >
-                <MenuItem value="S" style={{ fontSize: '1.8vh' }}>S</MenuItem>
-                <MenuItem value="A" style={{ fontSize: '1.8vh' }}>A</MenuItem>
-                <MenuItem value="B" style={{ fontSize: '1.8vh' }}>B</MenuItem>
-                <MenuItem value="C" style={{ fontSize: '1.8vh' }}>C</MenuItem>
-                <MenuItem value="D" style={{ fontSize: '1.8vh' }}>D</MenuItem>
-                <MenuItem value="E" style={{ fontSize: '1.8vh' }}>E</MenuItem>
+                <MenuItem value="緊急" style={{ fontSize: '1.8vh' }}>緊急クエスト</MenuItem>
+                <MenuItem value="Sランク" style={{ fontSize: '1.8vh' }}>S</MenuItem>
+                <MenuItem value="Aランク" style={{ fontSize: '1.8vh' }}>A</MenuItem>
+                <MenuItem value="Bランク" style={{ fontSize: '1.8vh' }}>B</MenuItem>
+                <MenuItem value="Cランク" style={{ fontSize: '1.8vh' }}>C</MenuItem>
+                <MenuItem value="Dランク" style={{ fontSize: '1.8vh' }}>D</MenuItem>
+                <MenuItem value="Eランク" style={{ fontSize: '1.8vh' }}>E</MenuItem>
               </Select>
             </FormControl>
             <TextField
@@ -1284,6 +1287,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>順位</TableCell>
                     <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>ハンター名</TableCell>
                     <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>得点</TableCell>
+                    <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>緊急</TableCell>
                     <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>S</TableCell>
                     <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>A</TableCell>
                     <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>B</TableCell>
@@ -1298,12 +1302,13 @@ const handleIndividualHunterAchievementDialogClose = () => {
                       <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{index + 1}</TableCell>
                       <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.hunterName}</TableCell>
                       <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.score}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.S || 0}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.A || 0}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.B || 0}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.C || 0}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.D || 0}</TableCell>
-                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.E || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.緊急 || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.Sランク || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.Aランク || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.Bランク || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.Cランク || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.Dランク || 0}</TableCell>
+                      <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>{item.ranks.Eランク || 0}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
