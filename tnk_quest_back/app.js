@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -8,6 +9,8 @@ const app = express();
 app.use(cors());
 
 app.use(bodyParser.json());
+
+app.use(morgan('dev'));
 
 // publicディレクトリを静的ファイルの提供用に設定
 app.use(express.static('./public'));
@@ -25,6 +28,9 @@ const completeQuestHandler = require('./routes/completeQuest');
 const getAchievementsHandler = require('./routes/getAchievements');
 const getHuntersHandler = require('./routes/getHunters');
 const getAllRanksCountHandler = require('./routes/getAllRankCount');
+const markQuestAsReadHandler = require('./routes/markQuestAsRead');
+const getReadStatusHandler = require('./routes/getReadStatus');
+const markQuestAsUnreadHandler = require('./routes/markQuestAsUnread');
 
 // ルート定義
 app.post('/signup/', signupHandler);
@@ -39,6 +45,9 @@ app.post('/completeQuest/', completeQuestHandler);
 app.get('/getAchievements/:hunterName/', getAchievementsHandler);
 app.get('/getHunters/', getHuntersHandler);
 app.get('/getAllRanksCount/', getAllRanksCountHandler);
+app.post('/markQuestAsRead/', markQuestAsReadHandler);
+app.get('/getReadStatus/:hunterName/', getReadStatusHandler);
+app.post('/markQuestAsUnread/', markQuestAsUnreadHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

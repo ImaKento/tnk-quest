@@ -40,6 +40,7 @@ function QuestSelection({ hunter, deleteHunter }) {
   const [selectedHunter, setSelectedHunter] = useState(null);
   const [isAllHuntersDialogOpen, setIsAllHuntersDialogOpen] = useState(false);
   const [isIndividualHunterAchievementDialogOpen, setIsIndividualHunterAchievementDialogOpen] = useState(false);
+  const [questStatus, setQuestStatus] = useState({});
   const [newQuest, setNewQuest] = useState({
     client: '',
     title: '',
@@ -378,6 +379,27 @@ const handleIndividualHunterAchievementDialogClose = () => {
     handleDeleteHunterDialogClose();
   };
 
+  // クエストを未読にする関数
+  const markQuestAsUnread = async (hunterName, questId) => {
+    try {
+      const response = await fetch('http://localhost:3000/markQuestAsUnread/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ hunterName, questId }),
+      });
+  
+      if (response.ok) {
+        // 成功時は無視
+      } else {
+        setErrorDialogOpen(true);
+      }
+    } catch (error) {
+      setErrorDialogOpen(true);
+    }
+  };
+
   // クエストを編集する関数
   const handleEditQuest = async () => {
     try {
@@ -391,11 +413,17 @@ const handleIndividualHunterAchievementDialogClose = () => {
   
       if (response.ok) {
         // 更新成功時の処理
+        markQuestAsUnread(hunter, selectedEditQuest)
+        setAddQuestSuccessDialogOpen(true);
+        fetchQuests();
+        fetchQuestStatus();
       } else {
         // エラー処理
+        setErrorDialogOpen(true);
       }
     } catch (error) {
       // エラーハンドリング
+      setErrorDialogOpen(true);
     }
     handleEditQuestDialogClose();
   };
@@ -413,8 +441,11 @@ const handleIndividualHunterAchievementDialogClose = () => {
       });
 
       if (response.ok) {
+        markQuestAsUnread(hunter, selectedQuest.id)
         setCompleteQuestSuccessDialogOpen(true);
         handleCompleteQuestDialogClose();
+        fetchQuests();
+        fetchQuestStatus();
       } else {
         setErrorDialogOpen(true);
       }
@@ -454,9 +485,32 @@ const handleIndividualHunterAchievementDialogClose = () => {
   };
 
   // クエストを選択し、背景画像のインデックスを更新する関数
-  const handleQuestSelect = (quest) => {
-    setSelectedQuest(quest);
-    updateBackgroundImageIndex(); // 背景画像のインデックスを更新
+  const handleQuestSelect = async (quest) => {
+
+    // クエストを既読としてマークするためのリクエストを送信
+    const questId = quest.id; // 選択されたクエストのID    
+    const hunterName = hunter;
+    try {
+        const response = await fetch(`http://localhost:3000/markQuestAsRead/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ hunterName, questId }), // ハンター名とクエストIDを送信
+        });
+
+        if (!response.ok) {
+          setErrorDialogOpen(true);
+        }
+        // マーク成功時の処理を追加
+        fetchQuests();
+        fetchQuestStatus();
+        setSelectedQuest(quest);
+        updateBackgroundImageIndex(); // 背景画像のインデックスを更新
+    } catch (error) {
+        // エラーハンドリング
+        setErrorDialogOpen(true);        
+    }
   };
 
   // UTC日付を「年月日時分」の形式でフォーマットする関数
@@ -485,8 +539,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
       });
   
       if (response.status === 200) {
-        // リクエストが成功した場合
-        console.log(newQuest);
+        // リクエストが成功した場合        
         handleCloseAddQuestDialog();
         setAddQuestSuccessDialogOpen(true);
         // ここで状態をリセット
@@ -498,6 +551,8 @@ const handleIndividualHunterAchievementDialogClose = () => {
           rank: '',
           overview: '',
         });
+        fetchQuests();
+        fetchQuestStatus();
       } else {
         setErrorDialogOpen(true);
       }
@@ -521,6 +576,8 @@ const handleIndividualHunterAchievementDialogClose = () => {
         // 処理成功の場合
         setAcceptQuestManagementDialogOpen(false);
         setAccpetQuestSuccessDialogOpen(true);
+        fetchQuests();
+        fetchQuestStatus();
       } else if (response.status === 400) {
         // 重複エラーの場合
         setIsDuplicateDialogOpen(true);
@@ -566,6 +623,8 @@ const handleIndividualHunterAchievementDialogClose = () => {
       }
       setQuestAcceptorDiscardManagementDialogOpen(false);
       setQuestAcceptorDiscardSuccessDialogOpen(true);
+      fetchQuests();
+      fetchQuestStatus();
     } catch (error) {
       setErrorDialogOpen(true);
     }
@@ -580,8 +639,29 @@ const handleIndividualHunterAchievementDialogClose = () => {
       } else {
         setErrorDialogOpen(true);
       }
+    } catch (error) {      
+      setErrorDialogOpen(true);
+    }
+  };
+
+  // APIから未読/既読情報を取得する関数
+  const fetchQuestStatus = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/getReadStatus/${hunter}/`, {
+        method: 'GET', // GETリクエストを使用
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setQuestStatus(data); // 状態に未読・既読情報を設定
+      } else {
+        // エラーハンドリング
+        setErrorDialogOpen(true);
+      }
     } catch (error) {
-      console.error(error);
+      // エラーハンドリング
       setErrorDialogOpen(true);
     }
   };
@@ -605,12 +685,17 @@ const handleIndividualHunterAchievementDialogClose = () => {
 
   // コンポーネントがマウントされたときに実行
   useEffect(() => {
-    fetchQuests();
+    const fetchData = async () => {
+      await fetchQuests();
+      await fetchQuestStatus();
+    };
+    fetchData();
   }, []);
 
   // リロードボタンが押されたときにデータを再取得
   const handleReload = () => {
     fetchQuests();
+    fetchQuestStatus();
     setSelectedQuest(null)
   };
 
@@ -622,8 +707,26 @@ const handleIndividualHunterAchievementDialogClose = () => {
               key={quest.id}
               variant="contained"
               onClick={() => handleQuestSelect(quest)}
-              style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.5vh', margin: '1vh', backgroundColor: 'rgba(101, 67, 33, 0.7)' }}
+              style={{ fontFamily: 'NotoSansCJK-Black',
+                       fontSize: '2.5vh', 
+                       margin: '1vh', 
+                       backgroundColor: 'rgba(101, 67, 33, 0.7)',
+                       position: 'relative', 
+              }}
             >
+              <span style={{  position: 'absolute',
+                              top: '0',
+                              left: '0',
+                              backgroundColor: questStatus[quest.id] ? 'transparent' : 'red',
+                              borderRadius: '50%',
+                              width: '24px',
+                              height: '24px',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+              }}>
+
+              </span>
               {quest.title}{'\u00A0\u00A0\u00A0'}
               <span style={{
                 color: quest.rank === "緊急" ? 'rgb(255, 60, 60)' : 'inherit',
@@ -1490,7 +1593,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
           <DialogContent style={{ height: '80vh', overflowY: 'auto' }}>
             {achievements.length > 0 ? (
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="実績テーブル">
+                <Table>
                   <TableHead>
                     <TableRow>
                       <TableCell align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト</TableCell>
@@ -1573,7 +1676,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
           <DialogContent style={{ height: '80vh', overflowY: 'auto' }}>
             {achievements.length > 0 ? (
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="実績テーブル">
+                <Table>
                   <TableHead>
                     <TableRow>
                       {selectedHunter === 'ALL' && (

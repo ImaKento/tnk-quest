@@ -157,7 +157,7 @@ function AccountManagement({ onLogin, onSubmit }) {
                 margin="dense"
                 id="name"
                 style={{ fontSize: '1.8vh' }} 
-                label="ユーザー名"
+                label="ハンター名"
                 type="text"
                 value={username}
                 onChange={handleUsernameChange}
@@ -224,7 +224,7 @@ function AccountManagement({ onLogin, onSubmit }) {
                 margin="dense"
                 id="name"
                 style={{ fontSize: '1.8vh' }} 
-                label="ユーザー名"
+                label="ハンター名"
                 type="text"
                 value={username}
                 onChange={handleUsernameChange}
