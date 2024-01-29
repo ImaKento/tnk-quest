@@ -381,14 +381,14 @@ const handleIndividualHunterAchievementDialogClose = () => {
   };
 
   // クエストを未読にする関数
-  const markQuestAsUnread = async (hunterName, questId) => {
+  const markQuestAsUnread = async (questId) => {
     try {
       const response = await fetch('http://localhost:3000/markQuestAsUnread/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ hunterName, questId }),
+        body: JSON.stringify({ questId }),
       });
   
       if (response.ok) {
@@ -403,6 +403,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
 
   // クエストを編集する関数
   const handleEditQuest = async () => {
+    console.log("handleedit" + selectedEditQuest);
     try {
       const response = await fetch(`http://localhost:3000/updateQuest/${selectedEditQuest}/`, {
         method: 'PUT',
@@ -414,11 +415,11 @@ const handleIndividualHunterAchievementDialogClose = () => {
   
       if (response.ok) {
         // 更新成功時の処理
-        markQuestAsUnread(hunter, selectedEditQuest)
+        markQuestAsUnread(selectedEditQuest);
         setAddQuestSuccessDialogOpen(true);
         fetchQuests();
         fetchQuestStatus();
-        setSelectedQuest(null)
+        setSelectedQuest(null);
       } else {
         // エラー処理
         setErrorDialogOpen(true);
@@ -443,16 +444,19 @@ const handleIndividualHunterAchievementDialogClose = () => {
       });
 
       if (response.ok) {
-        markQuestAsUnread(hunter, selectedQuest.id)
+        console.log(selectedQuest.id);
+        markQuestAsUnread(selectedQuest.id);
         setCompleteQuestSuccessDialogOpen(true);
         handleCompleteQuestDialogClose();
         fetchQuests();
         fetchQuestStatus();
-        setSelectedQuest(null)
+        setSelectedQuest(null);
       } else {
         setErrorDialogOpen(true);
       }
     } catch (error) {
+      console.log("selected" + selectedQuest.id);
+      console.error(error);
       setErrorDialogOpen(true);
     }
   };
