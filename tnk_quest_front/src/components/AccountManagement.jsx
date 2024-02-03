@@ -55,7 +55,7 @@ function AccountManagement({ onLogin, onSubmit }) {
 
   const handleCreateAccountSubmit = async () => {
         try {
-            const response = await fetch('http://192.168.11.133:3000/signup/', {
+            const response = await fetch('http://localhost:3000/signup/', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ function AccountManagement({ onLogin, onSubmit }) {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://192.168.11.133:3000/login/', {
+      const response = await fetch('http://localhost:3000/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
