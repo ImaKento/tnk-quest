@@ -5,6 +5,7 @@ const UserQuest = require('../models/read.model');
 // 特定のクエストIDに関連するすべてのユーザークエストのisReadをfalseに変更するエンドポイント
 router.post('/markQuestAsUnread', async (req, res) => {
     const { questId } = req.body; // クエストIDを受け取る
+
     // クエストIDのバリデーション
     if (!questId) {
         return res.status(400).json({ error: 'Quest ID is required' });

@@ -431,7 +431,6 @@ const handleIndividualHunterAchievementDialogClose = () => {
     handleEditQuestDialogClose();
   };
 
-
   // クエストを完了する関数
   const handleCompleteQuest = async () => {
     try {
@@ -455,7 +454,6 @@ const handleIndividualHunterAchievementDialogClose = () => {
         setErrorDialogOpen(true);
       }
     } catch (error) {
-      console.log("selected" + selectedQuest.id);
       console.error(error);
       setErrorDialogOpen(true);
     }
