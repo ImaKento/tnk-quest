@@ -403,7 +403,6 @@ const handleIndividualHunterAchievementDialogClose = () => {
 
   // クエストを編集する関数
   const handleEditQuest = async () => {
-    console.log("handleedit" + selectedEditQuest);
     try {
       const response = await fetch(`http://localhost:3000/updateQuest/${selectedEditQuest}/`, {
         method: 'PUT',
@@ -443,7 +442,6 @@ const handleIndividualHunterAchievementDialogClose = () => {
       });
 
       if (response.ok) {
-        console.log(selectedQuest.id);
         markQuestAsUnread(selectedQuest.id);
         setCompleteQuestSuccessDialogOpen(true);
         handleCompleteQuestDialogClose();
