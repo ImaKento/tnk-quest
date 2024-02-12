@@ -830,87 +830,89 @@ const handleIndividualHunterAchievementDialogClose = () => {
                   </Grid>
 
                   {/* 依頼者 */}
-                  <Grid item xs={2}>
-                    <Typography
-                      variant="body1"
-                      align="right"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
-                    >
-                      依頼者：
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={10}>
-                    <Typography
-                      variant="body1"
-                      align="left"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
-                    >
-                      {selectedQuest.client}
-                    </Typography>
-                  </Grid>
-
-                  {/* 締切 */}
-                  <Grid item xs={2}>
-                    <Typography
-                      variant="body1"
-                      align="right"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
-                    >
-                      締切：
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={10}>
-                    <Typography
-                      variant="body1"
-                      align="left"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
-                    >
-                      {formatDateWithTime(selectedQuest.deadline)}
-                    </Typography>
-                  </Grid>
-
-                  {/* 定員 */}
-                  <Grid item xs={2}>
-                    <Typography
-                      variant="body1"
-                      align="right"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
-                    >
-                      定員：
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={10}>
-                    <Typography
-                      variant="body1"
-                      align="left"
-                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
-                    >
-                      {selectedQuest.capacity}
-                    </Typography>
-                  </Grid>
-
-                  {/* 概要 */}
                   <Grid container alignItems="flex-start">
                     <Grid item xs={2}>
                       <Typography
                         variant="body1"
                         align="right"
-                        style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', whiteSpace: 'pre-line', marginBottom: '1.2vh' }}
+                        style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
                       >
-                        概要：
+                        依頼者：
                       </Typography>
                     </Grid>
-                  
                     <Grid item xs={10}>
                       <Typography
                         variant="body1"
                         align="left"
-                        style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', whiteSpace: 'pre-line', marginBottom: '1.2vh' }}
+                        style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
                       >
-                        {selectedQuest.overview}
+                        {selectedQuest.client}
                       </Typography>
                     </Grid>
-                  </Grid>
+
+                    {/* 締切 */}
+                    <Grid item xs={2}>
+                      <Typography
+                        variant="body1"
+                        align="right"
+                        style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
+                      >
+                        締切：
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={10}>
+                      <Typography
+                        variant="body1"
+                        align="left"
+                        style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
+                      >
+                        {formatDateWithTime(selectedQuest.deadline)}
+                      </Typography>
+                    </Grid>
+
+                    {/* 定員 */}
+                    <Grid item xs={2}>
+                      <Typography
+                        variant="body1"
+                        align="right"
+                        style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
+                      >
+                        定員：
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={10}>
+                      <Typography
+                        variant="body1"
+                        align="left"
+                        style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', marginBottom: '1.2vh' }}
+                      >
+                        {selectedQuest.capacity}
+                      </Typography>
+                    </Grid>
+
+                    {/* 概要 */}
+                
+                      <Grid item xs={2}>
+                        <Typography
+                          variant="body1"
+                          align="right"
+                          style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', whiteSpace: 'pre-line', marginBottom: '1.2vh' }}
+                        >
+                          概要：
+                        </Typography>
+                      </Grid>
+                    
+                      <Grid item xs={10}>
+                        <Typography
+                          variant="body1"
+                          align="left"
+                          style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh', whiteSpace: 'pre-line', marginleft:"10.0vh", marginBottom: '1.2vh' }}
+                        >
+                          {selectedQuest.overview}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  
                 </Grid>
                 {!selectedQuest.completed && (
                   <>
