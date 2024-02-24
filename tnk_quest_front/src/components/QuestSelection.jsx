@@ -33,6 +33,7 @@ function QuestSelection({ hunter, deleteHunter }) {
   const [hunterDeleteManagementDialogOpen, setHunterDeleteManagementDialogOpen] = useState(false);
   const [rankingDialogOpen, setRankingDialogOpen] = useState(false);
   const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+  const [commentsDialogOpen, setCommentsDialogOpen] = useState(false);
   const [isDuplicateDialogOpen, setIsDuplicateDialogOpen] = useState(false);
   const [isAchievementDialogOpen, setIsAchievementDialogOpen] = useState(false);
   const [achievements, setAchievements] = useState([]);
@@ -41,6 +42,8 @@ function QuestSelection({ hunter, deleteHunter }) {
   const [isAllHuntersDialogOpen, setIsAllHuntersDialogOpen] = useState(false);
   const [isIndividualHunterAchievementDialogOpen, setIsIndividualHunterAchievementDialogOpen] = useState(false);
   const [questStatus, setQuestStatus] = useState({});
+  const [comments, setComments] = useState([]); // コメントの状態
+  const [newCommentText, setNewCommentText] = useState(''); // 新しいコメントのテキストを保持する状態
   const [newQuest, setNewQuest] = useState({
     client: '',
     title: '',
@@ -221,6 +224,14 @@ function QuestSelection({ hunter, deleteHunter }) {
 
   const handleQuestAcceptorDiscardDialogClose = () => {
     setQuestAcceptorDiscardSuccessDialogOpen(false);
+  }
+
+  const handleCommentsDialogOpen = () => {
+    setCommentsDialogOpen(true);
+  }
+
+  const handleCommentsDialogClose = () => {
+    setCommentsDialogOpen(false);
   }
 
   const handleAddQuestDialogOpen = () => {
@@ -649,6 +660,57 @@ const handleIndividualHunterAchievementDialogClose = () => {
     }
   };
 
+  // コメントを追加する関数
+  const handleSubmitNewComments = async () => {
+    if (!newCommentText.trim()) return; // 空のコメントを送信しないようにする
+    try {
+        const response = await fetch('http://localhost:3000/addComments/', { // 適切なエンドポイントに変更してください
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                questId: selectedQuest.id, // コメントを追加するクエストのID
+                hunterName: hunter,
+                content: newCommentText, // ユーザーが入力したコメントテキスト
+            }),
+        });
+        
+        if (response.ok) {
+            // コメントのリストを再フェッチするか、レスポンスから新しいコメントを取得して状態を更新する
+            await fetchCommentsForSelectedQuest(selectedQuest.id);
+            setNewCommentText(''); // 入力フィールドをクリア
+        } else {
+            // エラーハンドリング
+            setErrorDialogOpen(true);
+        }
+    } catch (error) {
+      setErrorDialogOpen(true);
+    }
+  };
+
+  // 選択されたクエストのコメントを取得する関数
+  const fetchCommentsForSelectedQuest = async (questId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/getComments/${questId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setComments(data); // APIのレスポンス形式に合わせてください
+      } else {
+        console.error('コメントの取得に失敗しました。');
+      }
+    } catch (error) {
+      console.error('コメントの取得中にエラーが発生しました:', error);
+    }
+  };
+
+  // 選択されたクエストが変更されたときにコメントを取得
+  useEffect(() => {
+    if (selectedQuest) {
+      fetchCommentsForSelectedQuest(selectedQuest.id);
+    }
+  }, [selectedQuest]);
+
   // APIから未読/既読情報を取得する関数
   const fetchQuestStatus = async () => {
     try {
@@ -775,7 +837,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                   variant="contained"
                   style={{
                     position: 'absolute',
-                    top: 90,
+                    top: 80,
                     right: 20,
                     backgroundImage: 'url(/image/logo_bg.jpg)',
                     backgroundSize: 'cover',
@@ -798,7 +860,8 @@ const handleIndividualHunterAchievementDialogClose = () => {
                   PaperProps={{
                     style: {
                       backgroundColor: 'rgb(255,239,213)',
-                      width: buttonRef.current ? buttonRef.current.offsetWidth : 'auto'
+                      width: buttonRef.current ? buttonRef.current.offsetWidth : 'auto',
+                      minWidth: buttonRef.current ? buttonRef.current.offsetWidth : 'auto'
                     },
                   }}
                 >
@@ -816,6 +879,28 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     </MenuItem>
                   ))}
                 </Menu>
+
+                <Button
+                  aria-label="more"
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleCommentsDialogOpen}
+                  variant="contained"
+                  style={{
+                    position: 'absolute',
+                    top: 140,
+                    right: 20,
+                    backgroundImage: 'url(/image/logo_bg.jpg)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    padding: '0.5vh 2vw',
+                    fontFamily: 'NotoSansCJK-Black',
+                    fontSize: '1.8vh',
+                    color: 'rgb(255,239,213)'
+                  }}
+                >
+                  コメント＆質問
+                </Button>
 
                 <Grid container spacing={2} justifyContent="center" alignItems="center">
                   {/* タイトル */}
@@ -1390,6 +1475,89 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </Button>
           </DialogActions>
         </Dialog>
+
+        <Dialog open={commentsDialogOpen} onClose={handleCommentsDialogClose} fullWidth>
+          <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }} >コメント＆質問</DialogTitle>
+          <DialogContent>
+            <Grid container alignItems="center">
+
+              {/* コメント表示エリア */}
+              <Grid container direction="column">
+              {comments.map((comment, index) => (
+                <Grid
+                  key={index}
+                  container
+                  direction="column"
+                  alignItems={comment.hunterName === hunter ? 'flex-end' : 'flex-start'}
+                  style={{ padding: '20px' }}
+                >
+                  <Typography
+                    variant="caption"
+                    style={{
+                      marginBottom: '4px',
+                      fontFamily: 'NotoSansCJK-Black',
+                      fontSize: '1.8vh', // ハンター名のフォントサイズを調整
+                    }}
+                  >
+                    {comment.hunterName}
+                  </Typography>
+                  <Paper
+                    style={{
+                      backgroundColor: comment.hunterName === hunter ? '#DCF8C6' : '#ECECEC',
+                      padding: '10px',
+                      borderRadius: '10px',
+                      maxWidth: '60%',
+                      whiteSpace: 'pre-wrap', // ここで改行を保持するスタイルを適用
+                    }}
+                  >
+                    <Typography
+                      variant="body2"
+                      style={{ fontFamily: 'NotoSansCJK-Black', fontSize: '2.0vh' }}
+                    >
+                      {comment.content}
+                    </Typography>
+                  </Paper>
+                </Grid>
+              ))}
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', padding: '1.0vh' }}> {/* 外側のコンテナにパディングを追加 */}
+              {/* コメント入力フィールド */}
+              <TextField
+                margin="dense"
+                label="コメント"
+                style={{ fontSize: '1.8vh', backgroundColor: 'rgba(240, 240, 240, 0.5)', width: '95%' }}
+                type="text"
+                multiline
+                value={newCommentText}
+                onChange={(e) => setNewCommentText(e.target.value)}
+              />
+            </Grid>
+
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleCommentsDialogClose}
+              color="primary"
+              variant="contained"
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
+              fullWidth
+            >
+              キャンセル
+            </Button>
+            <Button
+              onClick={handleSubmitNewComments}
+              color="primary"
+              variant="contained"
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
+              fullWidth
+            >
+              送信
+            </Button>
+          </DialogActions>
+        </Dialog>
+
         <Dialog open={rankingDialogOpen} onClose={handleRankingDialogClose} fullWidth maxWidth="md">
           <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }}>ランキング</DialogTitle>
           <DialogContent>

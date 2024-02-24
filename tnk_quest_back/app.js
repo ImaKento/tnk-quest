@@ -31,6 +31,8 @@ const getAllRanksCountHandler = require('./routes/getAllRankCount');
 const markQuestAsReadHandler = require('./routes/markQuestAsRead');
 const getReadStatusHandler = require('./routes/getReadStatus');
 const markQuestAsUnreadHandler = require('./routes/markQuestAsUnread');
+const addCommentsHandler = require('./routes/addComments');
+const getCommentsHandler = require('./routes/getComments');
 
 // ルート定義
 app.post('/signup/', signupHandler);
@@ -48,6 +50,8 @@ app.get('/getAllRanksCount/', getAllRanksCountHandler);
 app.post('/markQuestAsRead/', markQuestAsReadHandler);
 app.get('/getReadStatus/:hunterName/', getReadStatusHandler);
 app.post('/markQuestAsUnread/', markQuestAsUnreadHandler);
+app.post('/addComments/', addCommentsHandler);
+app.get('/getComments/:questId/', getCommentsHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
