@@ -606,7 +606,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
     }
   };
 
-  // 受諾中のクエストを破棄する関数
+  // 受諾中のクエストを辞退する関数
   const handleQuestAcceptorDiscard = async (hunterName) => {
     try {
       // 選択中のクエストのhunters属性を分割して配列に変換
@@ -1035,7 +1035,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                       }}
                       fullWidth
                     >
-                      {hunter === 'ALL' ? 'クエスト破棄管理' : 'このクエストを破棄する'}
+                      {hunter === 'ALL' ? 'クエスト辞退管理' : 'このクエストを辞退する'}
                     </Button>
                   </>
                 )}
@@ -1941,15 +1941,15 @@ const handleIndividualHunterAchievementDialogClose = () => {
           </DialogActions>
         </Dialog>
         <Dialog open={questAcceptorDiscardManagementDialogOpen} onClose={handleQuestAcceptorDiscardManagementDialogClose}>
-          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト破棄管理</DialogTitle>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト辞退管理</DialogTitle>
           <DialogContent>
             <FormControl fullWidth margin="dense">
-              <InputLabel id="hunter-select-label">クエストを破棄するユーザーの選択</InputLabel>
+              <InputLabel id="hunter-select-label">クエストを辞退するユーザーの選択</InputLabel>
               <Select
                 labelId="hunter-select-label"
                 id="hunter-select"
                 value={selectedHunter}
-                label="クエストを破棄するユーザーの選択"
+                label="クエストを辞退するユーザーの選択"
                 onChange={handleHunterSelectChange}
               >
                 {allHunters.map(hunter => (
