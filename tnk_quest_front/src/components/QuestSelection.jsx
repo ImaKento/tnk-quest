@@ -35,6 +35,7 @@ function QuestSelection({ hunter, deleteHunter }) {
   const [errorDialogOpen, setErrorDialogOpen] = useState(false);
   const [commentsDialogOpen, setCommentsDialogOpen] = useState(false);
   const [isDuplicateDialogOpen, setIsDuplicateDialogOpen] = useState(false);
+  const [reenterDialogOpen,setReenterDialogOpen] = useState(false);
   const [isAchievementDialogOpen, setIsAchievementDialogOpen] = useState(false);
   const [achievements, setAchievements] = useState([]);
   const [allHunters, setAllHunters] = useState([]);
@@ -567,6 +568,9 @@ const handleIndividualHunterAchievementDialogClose = () => {
         });
         fetchQuests();
         fetchQuestStatus();
+      }else if(response.status === 400){
+        //概要の文章が長すぎるエラー
+        setReenterDialogOpen(true);
       } else {
         setErrorDialogOpen(true);
       }
@@ -1633,7 +1637,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
             <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト依頼</DialogTitle>
             <DialogContent>
             <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
-                正常に入力された内容でクエストを依頼できました。
+                クエスト依頼完了
             </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -1647,6 +1651,25 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 理解した
             </Button>
             </DialogActions>
+        </Dialog>
+        <Dialog open={reenterDialogOpen} onClose={() => setReenterDialogOpen(false)}>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>エラー</DialogTitle>
+          <DialogContent>
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
+              概要欄の文章が長すぎます。
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => setReenterDialogOpen(false)}
+              color="primary"
+              variant="contained"
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
+              fullWidth
+            >
+              閉じる
+            </Button>
+          </DialogActions>
         </Dialog>
         <Dialog open={deleteQuestSuccessDialogOpen} onClose={handleDeleteQuestSuccessDialogClose}>
             <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト削除</DialogTitle>
