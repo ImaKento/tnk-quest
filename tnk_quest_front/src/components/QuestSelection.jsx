@@ -1653,12 +1653,18 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </DialogActions>
         </Dialog>
         <Dialog open={reenterDialogOpen} onClose={() => setReenterDialogOpen(false)}>
-          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>エラー</DialogTitle>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>概要文の文字数制限</DialogTitle>
           <DialogContent>
-            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}>
-              概要欄の文章が長すぎます。
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
+              一度に送信できる概要文の字数は1000字未満です。    
             </DialogContentText>
-          </DialogContent>
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
+              それ以上の文章を追加したい場合は、一度クエストを依頼した後、 
+            </DialogContentText>
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
+              クエスト編集から文章を追加してください。  
+            </DialogContentText>
+            </DialogContent>  
           <DialogActions>
             <Button
               onClick={() => setReenterDialogOpen(false)}
