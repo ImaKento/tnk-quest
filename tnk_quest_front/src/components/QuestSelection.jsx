@@ -3,8 +3,23 @@ import { Fab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, 
 import MenuIcon from '@mui/icons-material/Menu';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import VerticalAlignBottomIcon from '@mui/icons-material/VerticalAlignBottom';
+import InfoIcon from '@mui/icons-material/Info';
 
 function QuestSelection({ hunter, deleteHunter }) {
+  const [menuBottunOpen, setmenuBottunDialogOpen] = useState(null);
+  const [instrAnchorEl, setinstrAnchorEl] = useState(null);
+  const [overviewOpen, setOverviewDialogOpen] = useState(null);
+  const [reloadBottunOpen, setreloadBottunDialogOpen] = useState(null);
+  const [moveBottunOpen, setmoveBottunDialogOpen] = useState(null);
+  const [questacopen, setquestacDialogOpen] = useState(null);
+  const [questofropen, setquestofrDialogopen] = useState(null);
+  const [questediopen, setquestediDialogOpen] = useState(null);
+  const [questcmpopen, setquestcmpDialogOpen] = useState(null);
+  const [questdelopen, setquestdelDialogOpen] = useState(null);
+  const [recopen, setrecDialogOpen] = useState(null);
+  const [recallopen,setrecallDialogOpen] = useState(null);
+  const [rankopen,setrankDialogOpen] = useState(null);
+  const [acdelopen, setacdelDialogOpen] = useState(null);
   const [mainAnchorEl, setMainAnchorEl] = useState(null);
   const [questAcceptorAnchorEl, setQuestAcceptorAnchorEl] = useState(null);
   const [quests, setQuests] = useState([]);
@@ -132,6 +147,10 @@ function QuestSelection({ hunter, deleteHunter }) {
     });
   };
 
+  const handleMainInstrOpen = (event) => {
+    setinstrAnchorEl(event.currentTarget);
+  };
+
   const handleMainMenuOpen = (event) => {
     setMainAnchorEl(event.currentTarget);
   };
@@ -143,6 +162,10 @@ function QuestSelection({ hunter, deleteHunter }) {
   const handleQuestAcceptorMenuClose = () => {
     setQuestAcceptorAnchorEl(null);
   };
+
+  const handleMainInstrClose = () => {
+    setinstrAnchorEl(null);
+  }
 
   const handleMainMenuClose = () => {
     setMainAnchorEl(null);
@@ -345,6 +368,90 @@ function QuestSelection({ hunter, deleteHunter }) {
 
   const handleRankingDialogClose = () => {
     setRankingDialogOpen(false);
+  }
+
+  const handleOverviewDialogOpen = () => {
+    setOverviewDialogOpen(true);
+  }
+
+  const handleOverviewDialogClose = () => {
+    setOverviewDialogOpen(false);
+  }
+
+  const handlereloadBottunDialogOpen = () => {
+    setreloadBottunDialogOpen(true);
+  }
+
+  const handlereloadBottunDialogClose = () => {
+    setreloadBottunDialogOpen(false);
+  }
+
+  const handlemenuBottunDialogOpen = () => {
+    setmenuBottunDialogOpen(true);
+  }
+
+  const handlemenuBottunDialogClose = () => {
+    setmenuBottunDialogOpen(false);
+  }
+  const handlemoveBottunDialogOpen = () => {
+    setmoveBottunDialogOpen(true)
+  }
+  const handlemoveBottunDialogClose = () => {
+    setmoveBottunDialogOpen(false)
+  }
+  const handlequestacDialogOpen = () => {
+    setquestacDialogOpen(true)
+  }
+  const handlequestacDialogClose = () => {
+    setquestacDialogOpen(false)
+  }
+  const handlequestofrDialogOpen = () => {
+    setquestofrDialogopen(true)
+  }
+  const handlequestofrDialogClose = () => {
+    setquestofrDialogopen(false)
+  }
+  const handlequestediDialogOpen = () => {
+    setquestediDialogOpen(true)
+  }
+  const handlequestediDialogClose = () => {
+    setquestediDialogOpen(false)
+  }
+  const handlequestcmpDialogOpen = () => {
+    setquestcmpDialogOpen(true)
+  }
+  const handlequestcmpDialogClose = () => {
+    setquestcmpDialogOpen(false)
+  }
+  const handlequestdelDialogOpen = () => {
+    setquestdelDialogOpen(true)
+  }
+  const handlequestdelDialogClose = () => {
+    setquestdelDialogOpen(false)
+  }
+  const handlerecDialogOpen = () => {
+    setrecDialogOpen(true)
+  }
+  const handlerecDialogClose = () => {
+    setrecDialogOpen(false)
+  }
+  const handlerecallDialogOpen = () => {
+    setrecallDialogOpen(true)
+  }
+  const handlerecallDialogClose = () => {
+    setrecallDialogOpen(false)
+  }
+  const handlerankDialogOpen = () => {
+    setrankDialogOpen(true)
+  }
+  const handlerankDialogClose = () => {
+    setrankDialogOpen(false)
+  }
+  const handleacdelDialogOpen = () => {
+    setacdelDialogOpen(true)
+  }
+  const handleacdelDialogClose = () => {
+    setacdelDialogOpen(false)
   }
 
 // 全ユーザーのユーザーネームを取得する関数
@@ -1264,6 +1371,342 @@ const handleIndividualHunterAchievementDialogClose = () => {
         >
           <VerticalAlignBottomIcon style={{ fontSize: '2.5vh' }}/>
         </Fab>
+
+        {/*説明書を開くボタン*/}
+        <IconButton
+          aria-label="instr"
+          aria-controls="long-instr"
+          aria-haspopup="true"
+          onClick={handleMainInstrOpen}
+          style={{
+            zIndex: 1000,
+            position: 'fixed',
+            right: '12vw',
+            top: '2vh',
+            backgroundColor: 'rgb(255,239,213)',
+            borderRadius: '50%',
+            padding: '1.5vh'            
+          }}
+          >
+            <InfoIcon style={{ fontSize: '2.5vh'}} />
+        </IconButton>
+        {/*説明書本体*/}
+        <Menu
+          id="long-instr"
+          anchorEl={instrAnchorEl}
+          keepMounted
+          open={Boolean(instrAnchorEl)}
+          onClose={handleMainInstrClose}
+          PaperProps={{
+            style: { backgroundColor: 'rgb(255,239,213)'},
+          }}
+        >
+          <Divider />
+          <MenuItem 
+          onClick={handleOverviewDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>概要</MenuItem>
+          <Dialog open={overviewOpen} onClose={handleOverviewDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>概要</DialogTitle>
+            <DialogContent>
+              <p>ユーザーは「ハンター」と呼ばれ、タスクの協力要請は「クエスト」と呼ばれます。メイン画面のクエストボタンから
+                クエストの依頼書を表示し、詳細を確認できます。クエストを引き受けるには受諾ボタンを押します。
+                クエスト完了時には得点が与えられ、ランキングに反映されます。
+              </p>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handleOverviewDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handlereloadBottunDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>リロードボタン</MenuItem>
+          <Dialog open={reloadBottunOpen} onClose={handlereloadBottunDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>リロードボタン</DialogTitle>
+            <DialogContent>
+              <p>左上にあり、押すと最新情報に更新されます。</p>
+              <img src="image/reload.png" style={{width: '50%', height: '60%'}} />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handlereloadBottunDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handlemenuBottunDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>メニューボタン</MenuItem>
+          <Dialog open={menuBottunOpen} onClose={handlemenuBottunDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>メニューボタン</DialogTitle>
+            <DialogContent>
+              <p>右上にあり、TNK-Questのクエストの依頼やランキングの閲覧などの主要な機能が実行できます。</p>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handlemenuBottunDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handlemoveBottunDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>最下部移動ボタン</MenuItem>
+          <Dialog open={moveBottunOpen} onClose={handlemoveBottunDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>最下部移動ボタン</DialogTitle>
+            <DialogContent>
+              <p>右下にあり、ページ最下部へ移動します。</p>
+              <img src="image/movebottum.png" alt="説明テキスト" style={{width: '50%', height: '60%'}} />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handlemoveBottunDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handlequestacDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>クエスト受諾/破棄</MenuItem>
+          <Dialog open={questacopen} onClose={handlequestacDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>クエスト受諾/破棄</DialogTitle>
+            <DialogContent>
+              <p>クエスト依頼書の下部のボタンでクエストのメンバーに参加/脱退ができます。</p>
+              <p>クエストに参加する方法は「このクエストを受諾する」を選択することでクエストに参加することができます</p>
+              <p>クエストから離脱したい場合は「このクエストを破棄する」を選択することでクエストから離脱することができます</p>
+              <img src="image/questac.png" style={{ width: '50%', heigth:'60%'}} />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handlequestacDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handlequestofrDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>クエスト依頼</MenuItem>
+          <Dialog open={questofropen} onClose={handlequestofrDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>クエスト依頼</DialogTitle>
+            <DialogContent>
+              <p>クエストを依頼できます。特殊文字は使用できない場合があります</p>
+              <p>クエスト依頼方法<br/>右上のメニューバーからクエストの依頼を選択</p>
+              <img src="image/ofr_step.png" style={{ width: '50%', height: '60%'}} />
+              <p>タイトル・締め切り・定員・クエストランク（作業の難易度）・作業概要を入力クエスト依頼時は1000文字まで入力可能、それ以上の記入は依頼後にクエスト編集から可能</p>
+              <img src="image/ofr_step2.png" style={{ width: '50%',height: '60%'}} />
+              <p>クエストが出現していれば依頼完了です</p>
+              <img src="image/ofr_final.png" style={{ width: '50%',height: '60%'}} />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handlequestofrDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handlequestediDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>クエスト編集</MenuItem>
+          <Dialog open={questediopen} onClose={handlequestediDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>クエスト編集</DialogTitle>
+            <DialogContent>
+              <p>依頼したクエストの編集ができます。編集後は、ハンター全員に未読で表示されます。</p>
+              <p>メニューバーからクエスト編集を選択</p>
+              <img src="image/questedit1.png" style={{ width: '50%', height: '60%'}} />
+              <p>編集したいクエストを選択します</p>
+              <img src="image/questedit.png" style={{ width: '50%', height: '60%'}} />
+              <p>クエストの編集後「編集」を選択することで編集完了・編集後は未読状態で表示される</p>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handlequestediDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handlequestcmpDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>クエスト完了</MenuItem>
+          <Dialog open={questcmpopen} onClose={handlequestcmpDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>クエスト完了</DialogTitle>
+            <DialogContent>
+              <p>メニューバーからクエスト完了を選択</p>
+              <p>完了したいクエストを選択</p>
+              <img src="image/questfinish.png" style={{ width: '50%', height: '60%'}} />
+              <p>クエスト完了後未読状態で全員に表示される</p>
+              <img src="image/questfinish1.png" style={{ width: '50%', height: '60%'}} />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handlequestcmpDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handleacdelDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>アカウント削除</MenuItem>
+          <Dialog open={acdelopen} onClose={handleacdelDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>アカウント削除</DialogTitle>
+            <DialogContent>
+              <p>アカウントを削除できます。得点情報などもすべて消えるため注意が必要です。
+              <br />ただし、依頼したクエストは残ります。誰も消すことができなくなりますので、依頼したクエストを消してからアカウントを削除してください。
+              <br />＊基本的にアカウントの復旧はできません。</p>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handleacdelDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handlequestdelDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>クエスト削除</MenuItem>
+          <Dialog open={questdelopen} onClose={handlequestdelDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>クエスト削除</DialogTitle>
+            <DialogContent>
+              <p>依頼したクエストを削除できます。完了後のクエストを削除しても得点の情報は残ります。</p>
+              <p>メニューバーからクエストの消去を選択、消去したいクエストの名前を選択する。「削除」ボタンの選択により削除が完了する</p>
+              <img src="image/questdel.png" style={{ width: '50%', height: '60%'}} />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handlequestdelDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handlerecDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>実績</MenuItem>
+          <Dialog open={recopen} onClose={handlerecDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>実績</DialogTitle>
+            <DialogContent>
+              <p>ハンター自身のこれまでの実績を確認することができます</p>
+              <p>メニューバーの「実績」から確認することができる</p>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handlerecDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handlerecallDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>みんなの実績</MenuItem>
+          <Dialog open={recallopen} onClose={handlerecallDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>みんなの実績</DialogTitle>
+            <DialogContent>
+              <p>ハンター全員の完了したクエストを確認することができる</p>
+              <p>メニューバーから「みんなのランキング」を選択</p>
+              <p>実績を閲覧したいハンターの名前を選択することで表示される</p>
+              <img src="image/recall.png" style={{ width: '50%',heigth: '60%'}} />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handlerecallDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handlerankDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>ランキング</MenuItem>
+          <Dialog open={rankopen} onClose={handlerankDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>ランキング</DialogTitle>
+            <DialogContent>
+              <p>メニューバーの「ランキング」から確認することができます</p>
+              <p>全ハンターの実績に基づいた得点情報から作成されたランキングを閲覧することができます</p>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handlerankDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Menu>
 
         {/* メニューを開くボタン */}
         <IconButton
