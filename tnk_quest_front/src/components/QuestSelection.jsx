@@ -49,7 +49,10 @@ function QuestSelection({ hunter, deleteHunter }) {
   const [rankingDialogOpen, setRankingDialogOpen] = useState(false);
   const [errorDialogOpen, setErrorDialogOpen] = useState(false);
   const [commentsDialogOpen, setCommentsDialogOpen] = useState(false);
+  const [threadsDialogOpen, setThreadsDialogOpen] = useState(false);
+  const [addThreadDialogOpen, setAddThreadDialogOpen] = useState(false);
   const [isDuplicateDialogOpen, setIsDuplicateDialogOpen] = useState(false);
+  const [reenterDialogOpen,setReenterDialogOpen] = useState(false);
   const [isAchievementDialogOpen, setIsAchievementDialogOpen] = useState(false);
   const [achievements, setAchievements] = useState([]);
   const [allHunters, setAllHunters] = useState([]);
@@ -57,8 +60,15 @@ function QuestSelection({ hunter, deleteHunter }) {
   const [isAllHuntersDialogOpen, setIsAllHuntersDialogOpen] = useState(false);
   const [isIndividualHunterAchievementDialogOpen, setIsIndividualHunterAchievementDialogOpen] = useState(false);
   const [questStatus, setQuestStatus] = useState({});
+  const [threads,setThreads] = useState([]); //　スレッドの状態
+  const [newThreadTitle,setNewThreadTitle] = useState(''); // 新しいスレッドタイトルを保持
+  const [selectedThreadId, setSelectedThreadId] = useState('');
+  const [selectedThread,setSelectedThread] = useState([]);
+  const [threadStatus,setThreadStatus] = useState([]); //既読未読（スレッドIDから）
+  const [threadStatusAsQuest, setThreadStatusAsQuest] = useState([]); //既読未読（クエストから）
   const [comments, setComments] = useState([]); // コメントの状態
   const [newCommentText, setNewCommentText] = useState(''); // 新しいコメントのテキストを保持する状態
+  const [textLength,setTextLength] = useState('');  //入力されたテキストの文字数
   const [newQuest, setNewQuest] = useState({
     client: '',
     title: '',
@@ -249,13 +259,64 @@ function QuestSelection({ hunter, deleteHunter }) {
     setQuestAcceptorDiscardSuccessDialogOpen(false);
   }
 
-  const handleCommentsDialogOpen = () => {
+  const handleCommentsDialogOpen = async () => {
+    handleThreadDialogClose();
+    handleAddThreadDialogClose();
     setCommentsDialogOpen(true);
   }
 
-  const handleCommentsDialogClose = () => {
-    setCommentsDialogOpen(false);
+  const handleCommentsDialogClose = async () => {
+    const threadId = selectedThreadId; // 選択されたスレッドのID    
+    const hunterName = hunter;
+    const questId = selectedQuest.id;
+    try {
+        const response = await fetch(`http://localhost:3000/markThreadAsRead/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ hunterName, questId ,threadId }), // ハンター名とスレッドIDを送信
+        });
+
+        if (!response.ok) {
+          setErrorDialogOpen(true);
+
+        }
+        // マーク成功時の処理を追加
+        fetchThreadStatus();
+        setCommentsDialogOpen(false);
+    } catch (error) {
+        // エラーハンドリング
+        setErrorDialogOpen(true);        
+    }
   }
+
+  const  handleThreadSelectChange = (event) => {
+    if(event){
+      setSelectedThreadId(event);
+    }
+  }
+
+  const handleThreadDialogOpen = () => {
+    setThreadsDialogOpen(true);
+  }
+
+  const handleThreadDialogClose = () => {
+    setThreadsDialogOpen(false);
+  }
+
+  const handleAddThreadDialogOpen = () => {
+    handleThreadDialogClose();
+    setAddThreadDialogOpen(true);
+  }
+
+  const handleAddThreadDialogClose = () => {
+    setAddThreadDialogOpen(false);
+  }
+
+  const handleNewThreadChange = (value) => {
+    setNewThreadTitle(value);
+  };
 
   const handleAddQuestDialogOpen = () => {
     setNewQuest({ ...newQuest, client: hunter });
@@ -268,6 +329,7 @@ function QuestSelection({ hunter, deleteHunter }) {
 
   const handleNewQuestChange = (field, value) => {
     setNewQuest({ ...newQuest, [field]: value });
+    setTextLength(value.length);
   };
 
   const handleErrorDialogClose = () => {
@@ -465,7 +527,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
         setDeleteQuestSuccessDialogOpen(true);
         // クエストリストを更新するために再取得する
         fetchQuests();
-        setSelectedQuest(null)
+        setSelectedQuest(null);
       } else {
         setErrorDialogOpen(true);
       }
@@ -674,6 +736,10 @@ const handleIndividualHunterAchievementDialogClose = () => {
         });
         fetchQuests();
         fetchQuestStatus();
+        fetchThreadStatus();
+      }else if(response.status === 400 && textLength > 1000){
+        //概要の文章が長すぎるエラー
+        setReenterDialogOpen(true);
       } else {
         setErrorDialogOpen(true);
       }
@@ -747,7 +813,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
       setQuestAcceptorDiscardSuccessDialogOpen(true);
       fetchQuests();
       fetchQuestStatus();
-      setSelectedQuest(null)
+      setSelectedQuest(null);
     } catch (error) {
       setErrorDialogOpen(true);
     }
@@ -767,25 +833,84 @@ const handleIndividualHunterAchievementDialogClose = () => {
     }
   };
 
+  // スレッドを追加する関数
+  const handleSubmitNewThreads = async () => {
+    handleAddThreadDialogClose();
+    if (!newThreadTitle.trim()) return; // 空のスレッドを送信しないようにする
+    try {
+        const response = await fetch('http://localhost:3000/addThread/', { // 適切なエンドポイントに変更してください
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                questId: selectedQuest.id, // スレッドを追加するクエストのID
+                hunterName: hunter,
+                title: newThreadTitle, // ユーザーが入力したスレッドタイトル
+            }),
+        });
+        
+        if (response.ok) {
+            // スレッドのリストを再フェッチするか、レスポンスから新しいスレッドを取得して状態を更新する
+            await fetchThreadsForSelectedQuest(selectedQuest.id);
+            const newThread = await response.json();
+            setSelectedThreadId(newThread.id);
+            await fetchThreadsForSelectedQuest(selectedQuest.id);
+            markThreadAsUnread(newThread.id);
+            fetchThreadStatus();
+            handleCommentsDialogOpen();
+            setNewThreadTitle(''); // 入力フィールドをクリア
+        } else {
+            // エラーハンドリング
+            setErrorDialogOpen(true);
+        }
+    } catch (error) {
+      setErrorDialogOpen(true);
+    }
+  };
+
+  // 選択されたクエストのスレッドを取得する関数
+  const fetchThreadsForSelectedQuest = async (questId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/getThreads/${questId}/`);
+      if (response.ok) {
+        const data = await response.json();
+        setThreads(data); // APIのレスポンス形式に合わせてください
+      } else {
+        console.error('スレッドの取得に失敗しました。');
+      }
+    } catch (error) {
+      console.error('スレッドの取得中にエラーが発生しました:', error);
+    }
+  };
+
+  // 選択されたクエストが変更されたときにスレッドを取得
+  useEffect(() => {
+    if (selectedQuest) {
+      fetchThreadsForSelectedQuest(selectedQuest.id);
+    }
+  }, [selectedQuest]);
+
   // コメントを追加する関数
   const handleSubmitNewComments = async () => {
     if (!newCommentText.trim()) return; // 空のコメントを送信しないようにする
-    try {
+    try{
         const response = await fetch('http://localhost:3000/addComments/', { // 適切なエンドポイントに変更してください
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                questId: selectedQuest.id, // コメントを追加するクエストのID
+                threadId: selectedThreadId, // コメントを追加するスレッドのID
                 hunterName: hunter,
                 content: newCommentText, // ユーザーが入力したコメントテキスト
             }),
         });
-        
         if (response.ok) {
+            markThreadAsUnread(selectedThreadId);
+            fetchThreadStatus();
             // コメントのリストを再フェッチするか、レスポンスから新しいコメントを取得して状態を更新する
-            await fetchCommentsForSelectedQuest(selectedQuest.id);
+            await fetchCommentsForSelectedThread(selectedThreadId);
             setNewCommentText(''); // 入力フィールドをクリア
         } else {
             // エラーハンドリング
@@ -796,10 +921,15 @@ const handleIndividualHunterAchievementDialogClose = () => {
     }
   };
 
-  // 選択されたクエストのコメントを取得する関数
-  const fetchCommentsForSelectedQuest = async (questId) => {
+  //
+  const fetchSelectedThreadForId = async (threadId) => {
+    const selectedThreadInfo = threads.find(thread => thread.id === threadId);
+    setSelectedThread(selectedThreadInfo);
+  }
+  // 選択されたスレッドのコメントを取得する関数
+  const fetchCommentsForSelectedThread = async (threadId) => {
     try {
-      const response = await fetch(`http://localhost:3000/getComments/${questId}`);
+      const response = await fetch(`http://localhost:3000/getComments/${threadId}/`);
       if (response.ok) {
         const data = await response.json();
         setComments(data); // APIのレスポンス形式に合わせてください
@@ -811,12 +941,74 @@ const handleIndividualHunterAchievementDialogClose = () => {
     }
   };
 
-  // 選択されたクエストが変更されたときにコメントを取得
+   //選択されたスレッドが変更されたときにコメントを取得
   useEffect(() => {
-    if (selectedQuest) {
-      fetchCommentsForSelectedQuest(selectedQuest.id);
+    if (selectedThreadId) {
+      fetchCommentsForSelectedThread(selectedThreadId);
+      fetchSelectedThreadForId(selectedThreadId);
     }
-  }, [selectedQuest]);
+  }, [selectedThreadId]);
+
+  const markThreadAsUnread = async (threadId) => {
+    try {
+      const response = await fetch('http://localhost:3000/markThreadAsUnread/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ threadId }),
+      });
+  
+      if (response.ok) {
+        // 成功時は無視
+      } else {
+        setErrorDialogOpen(true);
+      }
+    } catch (error) {
+      setErrorDialogOpen(true);
+    }
+  };
+
+  // APIからスレッドの未読/既読情報を取得する関数
+  const fetchThreadStatus = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/getReadThreadStatus/${hunter}/`, {
+        method: 'GET', // GETリクエストを使用
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setThreadStatus(data); // 状態に未読・既読情報を設定
+      } else {
+        // エラーハンドリング
+        setErrorDialogOpen(true);
+      }
+    } catch (error) {
+      // エラーハンドリング
+      setErrorDialogOpen(true);
+    } 
+
+    try {
+      const response = await fetch(`http://localhost:3000/getReadThreadStatusAsQuest/${hunter}/`, {
+        method: 'GET', // GETリクエストを使用
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setThreadStatusAsQuest(data); // 状態に未読・既読情報を設定
+      } else {
+        // エラーハンドリング
+        setErrorDialogOpen(true);
+      }
+    } catch (error) {
+      // エラーハンドリング
+      setErrorDialogOpen(true);
+    } 
+  }
 
   // APIから未読/既読情報を取得する関数
   const fetchQuestStatus = async () => {
@@ -862,6 +1054,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
     const fetchData = async () => {
       await fetchQuests();
       await fetchQuestStatus();
+      await fetchThreadStatus();
     };
     fetchData();
   }, []);
@@ -870,7 +1063,8 @@ const handleIndividualHunterAchievementDialogClose = () => {
   const handleReload = () => {
     fetchQuests();
     fetchQuestStatus();
-    setSelectedQuest(null)
+    fetchThreadStatus();
+    setSelectedQuest(null);
   };
 
   return (
@@ -882,7 +1076,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               variant="contained"
               onClick={() => handleQuestSelect(quest)}
               style={{ fontFamily: 'NotoSansCJK-Black',
-                       fontSize: '2.5vh', 
+                       fontSize: '2.5vh',   
                        margin: '1vh', 
                        backgroundColor: 'rgba(101, 67, 33, 0.7)',
                        position: 'relative', 
@@ -891,7 +1085,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               <span style={{  position: 'absolute',
                               top: '0',
                               left: '0',
-                              backgroundColor: questStatus[quest.id] ? 'transparent' : 'red',
+                              backgroundColor: questStatus[quest.id] === true && threadStatusAsQuest[quest.id] === true ? 'transparent' : 'red',
                               borderRadius: '50%',
                               width: '24px',
                               height: '24px',
@@ -991,7 +1185,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
                   aria-label="more"
                   aria-controls="simple-menu"
                   aria-haspopup="true"
-                  onClick={handleCommentsDialogOpen}
+                  onClick={handleThreadDialogOpen}
                   variant="contained"
                   style={{
                     position: 'absolute',
@@ -1006,6 +1200,17 @@ const handleIndividualHunterAchievementDialogClose = () => {
                     color: 'rgb(255,239,213)'
                   }}
                 >
+                  <span style={{  position: 'absolute',
+                              top: '0',
+                              left: '0',
+                              backgroundColor: threadStatusAsQuest[selectedQuest.id] ? 'transparent' : 'red',
+                              borderRadius: '50%',
+                              width: '20px',
+                              height: '20px',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                  }}></span>
                   コメント＆質問
                 </Button>
 
@@ -1753,7 +1958,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               <InputLabel style={{ fontSize: '1.8vh'}}>クエスト選択</InputLabel>
               <Select
                 value={selectedEditQuest}
-                lavel="編集するクエストの選択"
+                label="編集するクエストの選択"
                 onChange={handleSelectedEditQuestChange}
                 style={{ fontSize: '1.8vh' }}
               >
@@ -1918,9 +2123,104 @@ const handleIndividualHunterAchievementDialogClose = () => {
             </Button>
           </DialogActions>
         </Dialog>
+        <Dialog open={threadsDialogOpen} onClose={handleThreadDialogClose} fullWidth>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black'}}>
+            スレッドの追加・選択
+          </DialogTitle>
+          <DialogContent>
+            <FormControl fullWidth margin='dense'>
+              <InputLabel style={{ fontSize: '1.8vh'}}>スレッド追加・選択</InputLabel>
+              <Select
+                value={selectedThreadId}
+                label="スレッドの選択・追加"
+                onChange={(e) => handleThreadSelectChange(e.target.value)}
+                style={{ fontSize: '1.8vh' }}
+              >
+                <MenuItem
+                  onClick={handleAddThreadDialogOpen}
+                  style={{fontSize:'1.8vh',fontFamily:'NotoSansCJK-Black',color:'#1976d2'}}>
+                    スレッドの追加
+                </MenuItem>
 
+                {threads.map(thread => (
+                  <MenuItem key={thread.id} value={thread.id} style={{ fontSize: '1.8vh' }}>
+                      {threadStatus[thread.id] ? (
+                        thread.title
+                      ) : (
+                        <span>
+                          <span>{`${thread.title} `}</span>
+                          <span style={{ color: 'red' }}>(未読)</span>
+                        </span>
+                      )}
+                  </MenuItem>
+                ))}
+
+              </Select>
+            </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <Button 
+              onClick={handleThreadDialogClose}
+              color="primary"
+              variant="contained"
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
+              fullWidth
+            >
+              キャンセル
+            </Button>
+            <Button
+              onClick={handleCommentsDialogOpen}
+              color="primary"
+              variant="contained"
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
+              fullWidth
+            >
+              選択  
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={addThreadDialogOpen} onClose={handleAddThreadDialogClose}>
+          <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }} >新しいスレッドを追加</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              style={{ fontSize: '1.8vh' }} 
+              label="タイトル"
+              type="text"
+              fullWidth
+              inputProps={{ maxLength: 15 }}
+              value={newThreadTitle}
+              onChange={(e) => handleNewThreadChange(e.target.value)}
+              helperText="タイトルは15文字以内で入力してください"
+              FormHelperTextProps={{
+                style: { color: 'red' }
+              }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleAddThreadDialogClose}
+              color="primary"
+              variant="contained"
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
+              fullWidth
+            >
+              キャンセル
+            </Button>
+            <Button
+              onClick={handleSubmitNewThreads}
+              color="primary"
+              variant="contained"
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
+              fullWidth
+            >
+              追加
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Dialog open={commentsDialogOpen} onClose={handleCommentsDialogClose} fullWidth>
-          <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }} >コメント＆質問</DialogTitle>
+          <DialogTitle align="center" style={{ fontSize: '2.2vh', marginBottom: '1.5vh', fontFamily: 'NotoSansCJK-Black' }} >{selectedThread.title}</DialogTitle>
           <DialogContent>
             <Grid container alignItems="center">
 
@@ -1987,7 +2287,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }}
               fullWidth
             >
-              キャンセル
+              閉じる
             </Button>
             <Button
               onClick={handleSubmitNewComments}
@@ -2090,6 +2390,28 @@ const handleIndividualHunterAchievementDialogClose = () => {
                 理解した
             </Button>
             </DialogActions>
+        </Dialog>
+        <Dialog open={reenterDialogOpen} onClose={() => setReenterDialogOpen(false)}>
+          <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>概要文の文字数制限</DialogTitle>
+          <DialogContent>
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
+              一度に送信できる概要文の字数は1000字以下です。
+            </DialogContentText>
+            <DialogContentText align="center" style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} >
+              それ以上の文章を追加したい場合は、一度クエストを依頼した後、 クエスト編集から文章を追加してください。
+            </DialogContentText>
+          </DialogContent>  
+          <DialogActions>
+            <Button
+              onClick={() => setReenterDialogOpen(false)}
+              color="primary"
+              variant="contained"
+              style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black' }} 
+              fullWidth
+            >
+              閉じる
+            </Button>
+          </DialogActions>
         </Dialog>
         <Dialog open={deleteQuestSuccessDialogOpen} onClose={handleDeleteQuestSuccessDialogClose}>
             <DialogTitle align='center' style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black' }}>クエスト削除</DialogTitle>
@@ -2497,6 +2819,6 @@ const handleIndividualHunterAchievementDialogClose = () => {
         </Dialog>
       </Grid>
   );
-}
+};
 
 export default QuestSelection;

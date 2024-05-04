@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('comments', {
+    await queryInterface.createTable('threads', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,21 +11,26 @@ module.exports = {
       },
       hunterName: {
         type: Sequelize.STRING,
-        defaultValue: "unknown"
-      },
-      threadId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'threads', // ここはモデル名ではなくテーブル名
-          key: 'id',
-        },
         allowNull: false
       },
-      content: {
-        type: Sequelize.TEXT
+      questId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'quests',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      title: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+        defaultValue: ''
       },
       date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
       },
       createdAt: {
         allowNull: false,
@@ -38,6 +43,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('comments');
+    await queryInterface.dropTable('threads');
   }
 };

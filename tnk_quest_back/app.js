@@ -33,6 +33,12 @@ const getReadStatusHandler = require('./routes/getReadStatus');
 const markQuestAsUnreadHandler = require('./routes/markQuestAsUnread');
 const addCommentsHandler = require('./routes/addComments');
 const getCommentsHandler = require('./routes/getComments');
+const addThreadHandler = require('./routes/addThread');
+const getThreadsHandler = require('./routes/getThreads');
+const markThreadAsReadHandler = require('./routes/markThreadAsRead');
+const markThreadAsUnreadHandler = require('./routes/markThreadAsUnread');
+const getReadThreadStatusHandler = require('./routes/getReadThreadStatus'); 
+const getReadThreadStatusAsQuestHandler = require('./routes/getReadThreadStatusAsQuest'); 
 
 // ルート定義
 app.post('/signup/', signupHandler);
@@ -51,7 +57,13 @@ app.post('/markQuestAsRead/', markQuestAsReadHandler);
 app.get('/getReadStatus/:hunterName/', getReadStatusHandler);
 app.post('/markQuestAsUnread/', markQuestAsUnreadHandler);
 app.post('/addComments/', addCommentsHandler);
-app.get('/getComments/:questId/', getCommentsHandler);
+app.get('/getComments/:threadId/', getCommentsHandler);
+app.post('/addThread/', addThreadHandler);
+app.get('/getThreads/:questId/', getThreadsHandler);
+app.post('/markThreadAsRead/',markThreadAsReadHandler);
+app.post('/markThreadAsUnread/',markThreadAsUnreadHandler);
+app.get('/getReadThreadStatus/:hunterName/',getReadThreadStatusHandler);
+app.get('/getReadThreadStatusAsQuest/:hunterName/',getReadThreadStatusAsQuestHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -1,6 +1,6 @@
 const { Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/database');
-const Quests = require('./quest.model');
+const Threads = require('./thread.model');
 
 class Comments extends Model {}
 
@@ -9,11 +9,11 @@ Comments.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    questId: {
+    threadId: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'quests', // 'Quests'は関連付けられたモデルの名前に合わせてください
-            key: 'id', // 'id'はQuestsモデルの主キーに合わせてください
+            model: 'threads', // 'Threads'は関連付けられたモデルの名前に合わせてください
+            key: 'id', // 'id'はThreadsモデルの主キーに合わせてください
         },
         allowNull: false
     },    
@@ -31,8 +31,8 @@ Comments.init({
     modelName: 'comments'
 });
 
-// QuestsとCommentsの間の関連付け
-Comments.belongsTo(Quests, { foreignKey: 'questId', as: 'quest' });
-Quests.hasMany(Comments, { foreignKey: 'questId', as: 'comments' });
+// ThreadsとCommentsの間の関連付け
+Comments.belongsTo(Threads, { foreignKey: 'threadId', as: 'thread' });
+Threads.hasMany(Comments, { foreignKey: 'threadId', as: 'comments' });
 
 module.exports = Comments;
