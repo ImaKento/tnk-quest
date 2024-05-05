@@ -1501,7 +1501,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
           <MenuItem
           onClick={handleCommentBottunDialogOpen}
           style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>コメント機能</MenuItem>
-          <Dialog open={commentBottunOpen} onClose={handlemoveBottunDialogClose} align="center">
+          <Dialog open={commentBottunOpen} onClose={handleCommentBottunDialogClose} align="center">
             <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>コメント機能</DialogTitle>
             <DialogContent>
               <p>クエスト依頼者などに対して質問やコメントをすることができます。</p>
