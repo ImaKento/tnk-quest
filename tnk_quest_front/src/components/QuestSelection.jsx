@@ -11,6 +11,7 @@ function QuestSelection({ hunter, deleteHunter }) {
   const [overviewOpen, setOverviewDialogOpen] = useState(null);
   const [reloadBottunOpen, setreloadBottunDialogOpen] = useState(null);
   const [moveBottunOpen, setmoveBottunDialogOpen] = useState(null);
+  const [commentBottunOpen , setCommentBottunDialogOpen] = useState(null);
   const [questacopen, setquestacDialogOpen] = useState(null);
   const [questofropen, setquestofrDialogopen] = useState(null);
   const [questediopen, setquestediDialogOpen] = useState(null);
@@ -396,8 +397,14 @@ function QuestSelection({ hunter, deleteHunter }) {
   const handlemoveBottunDialogOpen = () => {
     setmoveBottunDialogOpen(true)
   }
+  const handleCommentBottunDialogOpen = () => {
+    setCommentBottunDialogOpen(true);
+  }
   const handlemoveBottunDialogClose = () => {
     setmoveBottunDialogOpen(false)
+  }
+  const handleCommentBottunDialogClose = () => {
+    setCommentBottunDialogOpen(false);
   }
   const handlequestacDialogOpen = () => {
     setquestacDialogOpen(true)
@@ -1492,6 +1499,36 @@ const handleIndividualHunterAchievementDialogClose = () => {
           </Dialog>
           <Divider />
           <MenuItem
+          onClick={handleCommentBottunDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>コメント機能</MenuItem>
+          <Dialog open={commentBottunOpen} onClose={handleCommentBottunDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>コメント機能</DialogTitle>
+            <DialogContent>
+              <p>クエスト依頼者などに対して質問やコメントをすることができます。</p>
+              <p>コメント方法<br/>各クエスト画面からコメント＆質問を選択。</p>
+              <img src="image/comment1.png" style={{ width: '50%', height: '60%'}} />
+              <p>閲覧したいスレッドを選択してください。</p>
+              <img src="image/comment5.png" style={{ width: '50%', height: '60%'}} />
+              <p>コメント欄が表示されます。送信したいコメントを入力し、送信ボタンを押してください。</p>
+              <img src="image/comment4.png" style={{ width: '50%', height: '60%'}} />
+              <p>スレッド選択画面でスレッドの追加を選択すると、新しいスレッドを作成できます。タイトルを入力して追加ボタンを押すと、追加されたコメント欄が開きます。</p>
+              <img src="image/comment2.png" style={{ width: '50%', height: '60%'}} />
+              <img src="image/comment3.png" style={{ width: '50%', height: '60%'}} />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handleCommentBottunDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
           onClick={handlequestacDialogOpen}
           style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>クエスト受諾/破棄</MenuItem>
           <Dialog open={questacopen} onClose={handlequestacDialogClose} align="center">
@@ -1524,7 +1561,7 @@ const handleIndividualHunterAchievementDialogClose = () => {
               <p>クエストを依頼できます。特殊文字は使用できない場合があります</p>
               <p>クエスト依頼方法<br/>右上のメニューバーからクエストの依頼を選択</p>
               <img src="image/ofr_step.png" style={{ width: '50%', height: '60%'}} />
-              <p>タイトル・締め切り・定員・クエストランク（作業の難易度）・作業概要を入力クエスト依頼時は1000文字まで入力可能、それ以上の記入は依頼後にクエスト編集から可能</p>
+              <p>タイトル・締め切り・定員・クエストランク（作業の難易度）・作業概要を入力。作業概要について、クエスト依頼時は1000文字まで入力可能、それ以上の記入は依頼後にクエスト編集から可能。</p>
               <img src="image/ofr_step2.png" style={{ width: '50%',height: '60%'}} />
               <p>クエストが出現していれば依頼完了です</p>
               <img src="image/ofr_final.png" style={{ width: '50%',height: '60%'}} />
