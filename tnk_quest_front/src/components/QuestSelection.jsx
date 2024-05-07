@@ -14,12 +14,14 @@ function QuestSelection({ hunter, deleteHunter }) {
   const [commentBottunOpen , setCommentBottunDialogOpen] = useState(null);
   const [questacopen, setquestacDialogOpen] = useState(null);
   const [questofropen, setquestofrDialogopen] = useState(null);
+  const [rankDefinitionOpen,setRankDefinitionOpen] = useState(null);
   const [questediopen, setquestediDialogOpen] = useState(null);
   const [questcmpopen, setquestcmpDialogOpen] = useState(null);
   const [questdelopen, setquestdelDialogOpen] = useState(null);
   const [recopen, setrecDialogOpen] = useState(null);
   const [recallopen,setrecallDialogOpen] = useState(null);
   const [rankopen,setrankDialogOpen] = useState(null);
+  const [privacyPolicyOpen,setPrivacyPolicyOpen] = useState(null);
   const [acdelopen, setacdelDialogOpen] = useState(null);
   const [mainAnchorEl, setMainAnchorEl] = useState(null);
   const [questAcceptorAnchorEl, setQuestAcceptorAnchorEl] = useState(null);
@@ -418,6 +420,12 @@ function QuestSelection({ hunter, deleteHunter }) {
   const handlequestofrDialogClose = () => {
     setquestofrDialogopen(false)
   }
+  const handleRankDefinitionDialogOpen = () => {
+    setRankDefinitionOpen(true);
+  }
+  const handleRankDefinitionDialogClose = () => {
+    setRankDefinitionOpen(false);
+  }
   const handlequestediDialogOpen = () => {
     setquestediDialogOpen(true)
   }
@@ -453,6 +461,12 @@ function QuestSelection({ hunter, deleteHunter }) {
   }
   const handlerankDialogClose = () => {
     setrankDialogOpen(false)
+  }
+  const handlePrivacyPolicyDialogOpen = () => {
+    setPrivacyPolicyOpen(true);
+  }
+  const handlePrivacyPolicyDialogClose = () => {
+    setPrivacyPolicyOpen(false);
   }
   const handleacdelDialogOpen = () => {
     setacdelDialogOpen(true)
@@ -1580,6 +1594,40 @@ const handleIndividualHunterAchievementDialogClose = () => {
           </Dialog>
           <Divider />
           <MenuItem
+          onClick={handleRankDefinitionDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>ランクの定義</MenuItem>
+          <Dialog open={rankDefinitionOpen} onClose={handleRankDefinitionDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>ランクの定義</DialogTitle>
+            <DialogContent align="left">
+              <p>(緊急クエスト)</p>
+              <p>納期が１週間以内の緊急性のあるタスク。<br/><br/></p>
+              <p>(Sランク)</p>
+              <p>大学院生レベル。1つの研究といえるレベルのタスク。<br/><br/></p>
+              <p>(Aランク)</p>
+              <p>専門性のある知識や、高度なプログラミング能力、アイデアなどが必要とされるタスク。<br/><br/></p>
+              <p>(Bランク)</p>
+              <p>クエストクリアで、そのタスクに対する基礎的な知識が身についたといえるもの。<br/><br/></p>
+              <p>(Cランク)</p>
+              <p>Dランクよりも少し思考力や工夫が必要なタスク。<br/><br/></p>
+              <p>(Dランク)</p>
+              <p>作業タスクだが、技術を学ぶことができる。<br/><br/></p>
+              <p>(Eランク)</p>
+              <p>中学生でもできる作業タスク。</p>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handleRankDefinitionDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
           onClick={handlequestediDialogOpen}
           style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>クエスト編集</MenuItem>
           <Dialog open={questediopen} onClose={handlequestediDialogClose} align="center">
@@ -1734,6 +1782,44 @@ const handleIndividualHunterAchievementDialogClose = () => {
             <DialogActions>
               <Button
                 onClick={handlerankDialogClose}
+                color="primary"
+                variant="contained"
+                style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
+                fullWidth
+              >
+              閉じる   
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+          <MenuItem
+          onClick={handlePrivacyPolicyDialogOpen}
+          style={{ fontFamily: 'NotoSansCJK-Black',fontSize: '1.8vh',padding: '1.0vh'}}>プライバシーポリシー</MenuItem>
+          <Dialog open={privacyPolicyOpen} onClose={handlePrivacyPolicyDialogClose} align="center">
+            <DialogTitle align="center" style={{ fontSize: '2.2vh', margin: '1.2vh', fontFamily: 'NotoSansCJK-Black'}}>プライバシーポリシー</DialogTitle>
+            <DialogContent align="left">
+              <p>TnkQuest(以下、「本アプリ」といいます。)は、ユーザーの個人情報の取り扱いについて、以下のとおりプライバシーポリシーを定めます。</p>
+              <p><br/>(個人情報)</p>
+              <p>「個人情報」とは、個人情報保護法にいう「個人情報」を指すものとし、生存する個人に関する情報であって、当該情報に含まれる氏名、生年月日、住所、電話番号、連絡先その他の記述等により個人を識別できる情報及び容貌、指紋、声紋、にかかるデータ、および健康保険証の保険者番号などの当該情報単体から特定の個人を識別できる情報(個人識別情報)を指します。</p>
+              <p><br/>(個人情報の収集方法)</p>
+              <p>当アプリは、ユーザーが利用登録する際などに、メールアドレスやLINEアカウントなどの個人情報をお尋ねすることがあります。また、ユーザーと提携先などとの間でなされたユーザーの個人情報を含む取引記録などに関する情報を、当アプリの提携先などから収集することがあります。</p>
+              <p><br/>(個人情報を収集・利用する目的)</p>
+              <p>1. 当サービスの提供・運営のため</p>
+              <p>2. 新クエストの登場や、コメントに関する通知を行うため</p>
+              <p>3. ユーザーからのお問い合わせに回答するため</p>
+              <p>4. サービスに関するお知らせ・案内を送付するため</p>
+              <p>5. 不正・不当な目的で本サービスを利用しようとするユーザーを特定し、ご利用をお断りするため</p>
+              <p>6. 上記の利用目的に付随する目的</p>
+              <p><br/>(利用目的の変更)</p>
+              <p>当アプリは、利用目的が変更前と関連を有すると合理的に認められる場合に限り、個人情報の利用目的を変更するものとします。利用目的の変更を行った場合には、変更後の目的について、所定の方法によりユーザーに通知し、または本アプリ上に公表するものとします。</p>
+              <p><br/>(個人情報の第三者提供)</p>
+              <p>当アプリは、あらかじめユーザーの同意を得ることなく、第三者に個人情報を提供することはありません。ただし、個人情報保護法その他の法令で認められる場合を除きます。</p>
+              <p><br/>(プライバシーポリシーの変更)</p>
+              <p>本ポリシーの内容は、法令その他本ポリシーに別段の定めのある場合を除いて、ユーザーに通知することなく、変更することができるものとします。当アプリが定める場合を除いて、変更後のプライバシーポリシーは、本アプリに掲載したときから効力を生じるものとします。</p>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handlePrivacyPolicyDialogClose}
                 color="primary"
                 variant="contained"
                 style={{ fontSize: '1.8vh', fontFamily: 'NotoSansCJK-Black'}}
