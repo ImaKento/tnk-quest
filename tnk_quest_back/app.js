@@ -18,6 +18,7 @@ app.use(express.static('./public'));
 // 各ルートハンドラのインポート
 const signupHandler = require('./routes/signup');
 const loginHandler = require('./routes/login');
+const resetPasswordHandler = require('./routes/resetPassword');
 const getQuestHandler = require('./routes/getQuest');
 const addQuestHandler = require('./routes/addQuest');
 const deleteQuestHandler = require('./routes/deleteQuest');
@@ -43,6 +44,7 @@ const getReadThreadStatusAsQuestHandler = require('./routes/getReadThreadStatusA
 // ルート定義
 app.post('/signup/', signupHandler);
 app.post('/login/', loginHandler);
+app.post('/reset-password/', resetPasswordHandler);
 app.get('/getQuest/', getQuestHandler);
 app.post('/addQuest/', addQuestHandler);
 app.delete('/deleteQuest/:questId/', deleteQuestHandler);
